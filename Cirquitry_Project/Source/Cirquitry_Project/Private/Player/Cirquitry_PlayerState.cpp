@@ -10,6 +10,7 @@ ACirquitry_PlayerState::ACirquitry_PlayerState()
 {
 	AbilitySystemComponent = CreateDefaultSubobject<UCirquitry_AbilitySystemComponent>("AbilitySystemComponent");
 	AbilitySystemComponent->SetIsReplicated(true);
+	AbilitySystemComponent->SetReplicationMode(EGameplayEffectReplicationMode::Mixed);
 
 	AttributeSet = CreateDefaultSubobject<UCirquitry_AttributeSet>("AttributeSet");
 
