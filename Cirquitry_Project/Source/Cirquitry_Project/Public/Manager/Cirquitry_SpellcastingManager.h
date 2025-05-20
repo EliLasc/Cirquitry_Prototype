@@ -3,17 +3,19 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "UObject/NoExportTypes.h"
+#include "GameFramework/Actor.h"
+#include "AbilitySystemInterface.h"
 #include "Cirquitry_SpellcastingManager.generated.h"
 
-class UAbilitySystemComponent;
-
-/**
- * 
- */
 UCLASS()
-class CIRQUITRY_PROJECT_API UCirquitry_SpellcastingManager : public UObject
+class CIRQUITRY_PROJECT_API ACirquitry_SpellcastingManager : public AActor
 {
 	GENERATED_BODY()
 	
+public:	
+	ACirquitry_SpellcastingManager();
+
+protected:
+	UPROPERTY()
+	TObjectPtr<UAbilitySystemComponent>AbilitySystemComponent;
 };

@@ -2,4 +2,15 @@
 
 
 #include "Manager/Cirquitry_SpellcastingManager.h"
+#include "AbilitySystem/Cirquitry_AbilitySystemComponent.h"
+
+ACirquitry_SpellcastingManager::ACirquitry_SpellcastingManager()
+{
+	PrimaryActorTick.bCanEverTick = false;
+
+	AbilitySystemComponent = CreateDefaultSubobject<UCirquitry_AbilitySystemComponent>("AbilitySystemComponent");
+	AbilitySystemComponent->SetIsReplicated(true);
+	AbilitySystemComponent->SetReplicationMode(EGameplayEffectReplicationMode::Mixed);
+}
+
 

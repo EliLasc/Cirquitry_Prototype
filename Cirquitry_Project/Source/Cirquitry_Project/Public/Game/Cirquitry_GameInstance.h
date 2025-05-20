@@ -7,6 +7,7 @@
 #include "Manager/Cirquitry_CirquitryManager.h"
 #include "Manager/Cirquitry_CombatManager.h"
 #include "Manager/Cirquitry_SpellcastingManager.h"
+
 #include "Cirquitry_GameInstance.generated.h"
 
 /**
@@ -19,13 +20,14 @@ class CIRQUITRY_PROJECT_API UCirquitry_GameInstance : public UGameInstance
 
 public:
 	UCirquitry_GameInstance();
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Manager")
+	TSubclassOf<ACirquitry_CirquitryManager> CirquitryManager;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Manager")
+	TSubclassOf<ACirquitry_SpellcastingManager> SpellCastingManager;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Manager")
+	TSubclassOf<ACirquitry_CombatManager> CombatManager;
 	
-	UPROPERTY(EditAnywhere)
-	TObjectPtr<UCirquitry_CirquitryManager> CirquitryManager;
-
-	UPROPERTY(EditAnywhere)
-	TObjectPtr<UCirquitry_SpellcastingManager> SpellCastingManager;
-
-	UPROPERTY(EditAnywhere)
-	TObjectPtr<UCirquitry_CombatManager> CombatManager;
 };
