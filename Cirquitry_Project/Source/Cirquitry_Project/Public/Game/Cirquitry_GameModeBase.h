@@ -14,4 +14,5 @@ class CIRQUITRY_PROJECT_API ACirquitry_GameModeBase : public AGameModeBase
 {
 	GENERATED_BODY()
 	
+
 };
