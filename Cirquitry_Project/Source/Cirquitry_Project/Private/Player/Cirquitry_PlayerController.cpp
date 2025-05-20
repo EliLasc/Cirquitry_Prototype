@@ -16,8 +16,10 @@ void ACirquitry_PlayerController::BeginPlay()
 	check(CirquitryContext);
 
 	UEnhancedInputLocalPlayerSubsystem* Subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(GetLocalPlayer());
-	check(Subsystem);
-	Subsystem->AddMappingContext(CirquitryContext, 0);
+	if(Subsystem)
+	{
+		Subsystem->AddMappingContext(CirquitryContext, 0);
+	}
 	
 	bShowMouseCursor = true;
 	DefaultMouseCursor = EMouseCursor::Default;

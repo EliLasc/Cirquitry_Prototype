@@ -4,9 +4,14 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/HUD.h"
-#include "UI/Widget/Cirquitry_UserWidget.h"
 #include "Cirquitry_HUD.generated.h"
 
+class UAttributeSet;
+class UAbilitySystemComponent;
+class UCirquitry_OverWidgetController;
+class UCirquitry_UserWidget;
+
+struct FWidgetControllerParams;
 /**
  * 
  */
@@ -20,11 +25,20 @@ public:
 	UPROPERTY()
 	TObjectPtr<UCirquitry_UserWidget> OverlayWidget;
 
+	UCirquitry_OverWidgetController* GetOverlayWidgetController(const FWidgetControllerParams& WCParams);
+
+	void InitOverlay(APlayerController* PC, APlayerState* PS, UAbilitySystemComponent* ASC, UAttributeSet* PAS);
+	
 protected:
-	virtual void BeginPlay() override;
 	
 private:
 
 	UPROPERTY(EditAnywhere)
 	TSubclassOf<UCirquitry_UserWidget> OverlayWidgetClass;
+
+	UPROPERTY()
+	TObjectPtr<UCirquitry_OverWidgetController> OverlayWidgetController;
+
+	UPROPERTY(EditAnywhere)
+	TSubclassOf<UCirquitry_OverWidgetController> OverlayWidgetControllerClass;
 };
