@@ -24,11 +24,7 @@ public:
 	UPROPERTY(BlueprintAssignable, Category = "GAS|Attributes")
 	FOnHealthChangedSignature OnHealthChanged;
 
-	//UPROPERTY(BlueprintAssignable, Category = "GAS|Attributes")
-	//FOnHealthChangedSignature OnMaxHealthChanged;
-
 protected:
 	void HealthChanged(const FOnAttributeChangeData& Data) const;
-	//void MaxHealthChanged(const FOnAttributeChangeData& Data);
 
 };

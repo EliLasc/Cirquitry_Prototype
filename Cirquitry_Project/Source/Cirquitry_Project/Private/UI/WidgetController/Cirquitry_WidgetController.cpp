@@ -8,7 +8,8 @@ void UCirquitry_WidgetController::SetWidgetControllerParams(const FWidgetControl
 	PlayerController = WCParams.PlayerController;
 	PlayerState = WCParams.PlayerState;
 	AbilitySystemComponent = WCParams.AbilitySystemComponent;
-	AttributeSet = WCParams.PlayerAttributeSet;
+	PlayerAttributeSet = WCParams.PlayerAttributeSet;
+	EnemyAttributeSet = WCParams.EnemyAttributeSet;
 }
 
 void UCirquitry_WidgetController::BroadcastInitialValues()

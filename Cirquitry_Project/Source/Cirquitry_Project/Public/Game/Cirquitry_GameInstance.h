@@ -20,14 +20,24 @@ class CIRQUITRY_PROJECT_API UCirquitry_GameInstance : public UGameInstance
 
 public:
 	UCirquitry_GameInstance();
+	virtual void SpawnManagers();
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Manager")
-	TSubclassOf<ACirquitry_CirquitryManager> CirquitryManager;
+	TSubclassOf<ACirquitry_CirquitryManager> CirquitryManagerClass;
+
+	UPROPERTY()
+	AActor* CirquitryManager;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Manager")
-	TSubclassOf<ACirquitry_SpellcastingManager> SpellCastingManager;
+	TSubclassOf<ACirquitry_SpellcastingManager> SpellCastingManagerClass;
+
+	UPROPERTY()
+	AActor* SpellCastingManager;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Manager")
-	TSubclassOf<ACirquitry_CombatManager> CombatManager;
+	TSubclassOf<ACirquitry_CombatManager> CombatManagerClass;
+
+	UPROPERTY()
+	AActor* CombatManager;
 	
 };

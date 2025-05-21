@@ -19,7 +19,6 @@ ACirquitry_EnemyCharacter::ACirquitry_EnemyCharacter()
 UAbilitySystemComponent* ACirquitry_EnemyCharacter::GetAbilitySystemComponent() const
 {
 	return AbilitySystemComponent;
-
 }
 
 void ACirquitry_EnemyCharacter::BeginPlay()

@@ -27,7 +27,7 @@ public:
 
 	UCirquitry_OverWidgetController* GetOverlayWidgetController(const FWidgetControllerParams& WCParams);
 
-	void InitOverlay(APlayerController* PC, APlayerState* PS, UAbilitySystemComponent* ASC, UAttributeSet* PAS);
+	void InitOverlay(APlayerController* PC, APlayerState* PS, UAbilitySystemComponent* ASC, UAttributeSet* PAS, UAttributeSet* EAS);
 	
 protected:
 	

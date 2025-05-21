@@ -8,27 +8,31 @@
 void UCirquitry_OverWidgetController::BroadcastInitialValues()
 {
 	//Player AttributeSet
-	const UCirquitry_AttributeSet* PlayerAttributeSet = CastChecked<UCirquitry_AttributeSet>(AttributeSet);
+	const UCirquitry_AttributeSet* PAttributeSet = CastChecked<UCirquitry_AttributeSet>(PlayerAttributeSet);
 
+	OnHealthChanged.Broadcast(PAttributeSet->GetHealth());
+	
 	//Enemy AttributeSet
-	//const UCirquitry_AttributeSet* EnemyAttributeSet = CastChecked<UCirquitry_AttributeSet>(AttributeSet);
-
-	OnHealthChanged.Broadcast(PlayerAttributeSet->GetHealth());
-	//OnMaxHealthChanged.Broadcast(PlayerAttributeSet->GetMaxHealth())
+	const UCirquitry_AttributeSet* EAttributeSet = CastChecked<UCirquitry_AttributeSet>(EnemyAttributeSet);
+	
+	OnHealthChanged.Broadcast(EAttributeSet->GetHealth());
 }
 
 void UCirquitry_OverWidgetController::BindCallBacksToDependencies()
 {
 	//Player AttributeSet
-	const UCirquitry_AttributeSet* PlayerAttributeSet = CastChecked<UCirquitry_AttributeSet>(AttributeSet);
+	const UCirquitry_AttributeSet* PAttributeSet = CastChecked<UCirquitry_AttributeSet>(PlayerAttributeSet);
 
-	//Enemy AttributeSet
-	//const UCirquitry_AttributeSet* EnemyAttributeSet = CastChecked<UCirquitry_AttributeSet>(AttributeSet);
-
-
-	//This binds the HealthChanged function to fire whenever the health attribute changes withing the attribute set
+	//This binds the HealthChanged function to fire whenever the health attribute changes within the attribute set
 	AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(
-		PlayerAttributeSet->GetHealthAttribute()).AddUObject(this, &UCirquitry_OverWidgetController::HealthChanged);
+		PAttributeSet->GetHealthAttribute()).AddUObject(this, &UCirquitry_OverWidgetController::HealthChanged);
+	
+	//Enemy AttributeSet
+	const UCirquitry_AttributeSet* EAttributeSet = CastChecked<UCirquitry_AttributeSet>(EnemyAttributeSet);
+
+	//This binds the HealthChanged function to fire whenever the health attribute changes within the attribute set
+	AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(
+		EAttributeSet->GetHealthAttribute()).AddUObject(this, &UCirquitry_OverWidgetController::HealthChanged);
 }
 
 void UCirquitry_OverWidgetController::HealthChanged(const FOnAttributeChangeData& Data) const
