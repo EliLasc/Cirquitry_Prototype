@@ -4,11 +4,10 @@
 
 #include "CoreMinimal.h"
 #include "UI/WidgetController/Cirquitry_WidgetController.h"
+#include "Game/Cirquitry_GameInstance.h"
 #include "Cirquitry_OverWidgetController.generated.h"
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnHealthChangedSignature, float, NewHealth);
-//DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnMaxHealthChangedSignature, float, NewMaxHealth);
-
 
 /**
  * 
@@ -26,5 +25,8 @@ public:
 
 protected:
 	void HealthChanged(const FOnAttributeChangeData& Data) const;
+
+	UPROPERTY()
+	TObjectPtr<UCirquitry_GameInstance> GameInstance;
 
 };
