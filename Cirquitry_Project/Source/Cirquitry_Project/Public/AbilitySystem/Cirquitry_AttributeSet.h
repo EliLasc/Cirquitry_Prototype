@@ -69,50 +69,20 @@ class CIRQUITRY_PROJECT_API UCirquitry_AttributeSet : public UAttributeSet
 	TMap<FGameplayTag, TStaticFuncPtr<FGameplayAttribute()>> TagsToAttributes;
 	
 	/*
-	 *Vital Attributes
+	 *Combat Variables
 	 */
 	
-	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_Health, Category = "Vital Attributes")
+	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_Health, Category = "Combat Variables")
 	FGameplayAttributeData Health;
 	ATTRIBUTE_ACCESSORS(UCirquitry_AttributeSet, Health);
-	
-	/*
-	 * Primary Attributes
-	 */
-
-	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_Strength, Category = "Primary Attributes")
-	FGameplayAttributeData Strength;
-	ATTRIBUTE_ACCESSORS(UCirquitry_AttributeSet, Strength);
 
 	/*
-	 * Secondary Attributes
-	 */
-
-	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_Armor, Category = "Secondary Attributes")
-	FGameplayAttributeData Armor;
-	ATTRIBUTE_ACCESSORS(UCirquitry_AttributeSet, Armor);
-
-	/*
-	 *Vital Attributes
+	 *Combat Variables
 	 */
 
 	UFUNCTION()
 	void OnRep_Health(const FGameplayAttributeData OldHealth) const;
 
-	/*
-	 * Primary Attributes
-	 */
-	
-	UFUNCTION()
-	void OnRep_Strength(const FGameplayAttributeData OldStrength) const;
-	
-
-	/*
-	 * Secondary Attributes
-	 */
-
-	UFUNCTION()
-	void OnRep_Armor(const FGameplayAttributeData OldArmor) const;
 
 
 

@@ -30,18 +30,7 @@ void UCirquitry_AttributeSet::GetLifetimeReplicatedProps(TArray<FLifetimePropert
 	 */
 
 	DOREPLIFETIME_CONDITION_NOTIFY(UCirquitry_AttributeSet, Health, COND_None, REPNOTIFY_Always)
-
-	/*
-	 * Primary Attributes
-	 */
-
-	DOREPLIFETIME_CONDITION_NOTIFY(UCirquitry_AttributeSet, Strength, COND_None, REPNOTIFY_Always);
-
-	/*
-	 * Secondary Attributes
-	 */
-
-	DOREPLIFETIME_CONDITION_NOTIFY(UCirquitry_AttributeSet, Armor, COND_None, REPNOTIFY_Always);
+	
 }
 
 void UCirquitry_AttributeSet::PreAttributeChange(const FGameplayAttribute& Attribute, float& NewValue)
@@ -106,29 +95,11 @@ void UCirquitry_AttributeSet::PostGameplayEffectExecute(const FGameplayEffectMod
 }
 
 /*
- * Vital Attributes
+ * Combat Attributes
  */
 
 void UCirquitry_AttributeSet::OnRep_Health(const FGameplayAttributeData OldHealth) const
 {
 	GAMEPLAYATTRIBUTE_REPNOTIFY(UCirquitry_AttributeSet, Health, OldHealth);
-}
-
-/*
- * Primary Attributes
- */
-
-void UCirquitry_AttributeSet::OnRep_Strength(const FGameplayAttributeData OldStrength) const
-{
-	GAMEPLAYATTRIBUTE_REPNOTIFY(UCirquitry_AttributeSet, Strength, OldStrength);
-}
-
-/*
- * Secondary Attributes
- */
-
-void UCirquitry_AttributeSet::OnRep_Armor(const FGameplayAttributeData OldArmor) const
-{
-	GAMEPLAYATTRIBUTE_REPNOTIFY(UCirquitry_AttributeSet, Armor, OldArmor);
 }
 
