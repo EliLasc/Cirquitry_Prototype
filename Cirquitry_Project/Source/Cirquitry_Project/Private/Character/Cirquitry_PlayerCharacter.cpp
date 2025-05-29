@@ -3,6 +3,7 @@
 
 #include "Character/Cirquitry_PlayerCharacter.h"
 
+#include "AbilitySystem/Cirquitry_AbilitySystemComponent.h"
 #include "AbilitySystem/Cirquitry_AttributeSet.h"
 #include "Character/Cirquitry_EnemyCharacter.h"
 #include "Game/Cirquitry_GameInstance.h"
@@ -32,7 +33,8 @@ void ACirquitry_PlayerCharacter::InitAbilityActorInfo()
 	ACirquitry_PlayerState* Cirquitry_PlayerState = GetPlayerState<ACirquitry_PlayerState>();
 	check(Cirquitry_PlayerState);
 	Cirquitry_PlayerState->GetAbilitySystemComponent()->InitAbilityActorInfo(Cirquitry_PlayerState, this);
-
+	Cast<UCirquitry_AbilitySystemComponent>(Cirquitry_PlayerState->GetAbilitySystemComponent())->AbilityActorInfoSet();
+	
 	UCirquitry_GameInstance* GameInstance = Cast<UCirquitry_GameInstance>(GetGameInstance());
 	GameInstance->SpawnManagers();
 	

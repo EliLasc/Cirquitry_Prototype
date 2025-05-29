@@ -7,7 +7,27 @@
 #include "Game/Cirquitry_GameInstance.h"
 #include "Cirquitry_OverWidgetController.generated.h"
 
+class UCirquitry_UserWidget;
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnHealthChangedSignature, float, NewHealth);
+
+//Creates a struct to act as a base for a structure blueprint to be made from
+USTRUCT(BlueprintType)
+struct FUIWidgetRow : public FTableRowBase
+{
+	GENERATED_BODY()
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	FGameplayTag MessageTag = FGameplayTag();
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	FText Message = FText();
+	
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	TSubclassOf<UCirquitry_UserWidget> MessageWidget;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	UTexture2D* Image = nullptr;
+};
 
 /**
  * 
@@ -24,6 +44,10 @@ public:
 	FOnHealthChangedSignature OnHealthChanged;
 
 protected:
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Widget Data")
+	TObjectPtr<UDataTable> MessageWidgetDataTable;
+	
 	void HealthChanged(const FOnAttributeChangeData& Data) const;
 
 	UPROPERTY()

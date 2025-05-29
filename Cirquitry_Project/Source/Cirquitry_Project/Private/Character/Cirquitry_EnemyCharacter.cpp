@@ -24,6 +24,11 @@ UAbilitySystemComponent* ACirquitry_EnemyCharacter::GetAbilitySystemComponent() 
 void ACirquitry_EnemyCharacter::BeginPlay()
 {
 	Super::BeginPlay();
+	InitAbilityActorInfo();
+}
 
+void ACirquitry_EnemyCharacter::InitAbilityActorInfo()
+{
 	AbilitySystemComponent->InitAbilityActorInfo(this, this);
+	Cast<UCirquitry_AbilitySystemComponent>(AbilitySystemComponent)->AbilityActorInfoSet();
 }

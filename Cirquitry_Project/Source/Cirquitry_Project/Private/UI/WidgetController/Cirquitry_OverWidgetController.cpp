@@ -3,6 +3,7 @@
 
 #include "UI/WidgetController/Cirquitry_OverWidgetController.h"
 
+#include "AbilitySystem/Cirquitry_AbilitySystemComponent.h"
 #include "AbilitySystem/Cirquitry_AttributeSet.h"
 
 void UCirquitry_OverWidgetController::BroadcastInitialValues()
@@ -33,6 +34,18 @@ void UCirquitry_OverWidgetController::BindCallBacksToDependencies()
 	//This binds the HealthChanged function to fire whenever the health attribute changes within the attribute set
 	AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(
 		EAttributeSet->GetHealthAttribute()).AddUObject(this, &UCirquitry_OverWidgetController::HealthChanged);
+
+	//This returns the tags on the applying GameplayEffect
+	Cast<UCirquitry_AbilitySystemComponent>(AbilitySystemComponent)->EffectAssetTags.AddLambda(
+		[](const FGameplayTagContainer& AssetTags)
+		{
+			for (const FGameplayTag& Tag : AssetTags)
+			{
+				const FString Msg = FString::Printf(TEXT("GE Tag: %s"), *Tag.ToString());
+				GEngine->AddOnScreenDebugMessage(-1, 8.f, FColor::Blue, Msg);
+			}
+		}
+	);
 }
 
 void UCirquitry_OverWidgetController::HealthChanged(const FOnAttributeChangeData& Data) const

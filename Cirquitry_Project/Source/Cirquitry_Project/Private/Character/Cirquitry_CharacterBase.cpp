@@ -15,4 +15,9 @@ void ACirquitry_CharacterBase::BeginPlay()
 	
 }
 
+void ACirquitry_CharacterBase::InitAbilityActorInfo()
+{
+	
+}
+
 
