@@ -45,12 +45,22 @@ public:
 
 protected:
 
+	//Contains the data table of all descriptions that need to be displayed
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Widget Data")
-	TObjectPtr<UDataTable> MessageWidgetDataTable;
+	TObjectPtr<UDataTable> DescriptionWidgetDataTable;
 	
 	void HealthChanged(const FOnAttributeChangeData& Data) const;
 
 	UPROPERTY()
 	TObjectPtr<UCirquitry_GameInstance> GameInstance;
 
+	template<typename T>
+	T* GetDataTableRowByTag(UDataTable* DataTable, const FGameplayTag& Tag);
+
 };
+
+template <typename T>
+T* UCirquitry_OverWidgetController::GetDataTableRowByTag(UDataTable* DataTable, const FGameplayTag& Tag)
+{
+	return DataTable->FindRow<T>(Tag.GetTagName(), TEXT(""));;
+}

@@ -37,12 +37,15 @@ void UCirquitry_OverWidgetController::BindCallBacksToDependencies()
 
 	//This returns the tags on the applying GameplayEffect
 	Cast<UCirquitry_AbilitySystemComponent>(AbilitySystemComponent)->EffectAssetTags.AddLambda(
-		[](const FGameplayTagContainer& AssetTags)
+		[this](const FGameplayTagContainer& AssetTags)
 		{
+			//gets the tag container of any effect applied to the players AbilitySystemComponent
 			for (const FGameplayTag& Tag : AssetTags)
 			{
 				const FString Msg = FString::Printf(TEXT("GE Tag: %s"), *Tag.ToString());
 				GEngine->AddOnScreenDebugMessage(-1, 8.f, FColor::Blue, Msg);
+
+				FUIWidgetRow* Row = GetDataTableRowByTag<FUIWidgetRow>(DescriptionWidgetDataTable, Tag);
 			}
 		}
 	);
