@@ -7,7 +7,8 @@ void UCirquitry_WidgetController::SetWidgetControllerParams(const FWidgetControl
 {
 	PlayerController = WCParams.PlayerController;
 	PlayerState = WCParams.PlayerState;
-	AbilitySystemComponent = WCParams.AbilitySystemComponent;
+	PlayerAbilitySystemComponent = WCParams.PlayerAbilitySystemComponent;
+	EnemyAbilitySystemComponent = WCParams.EnemyAbilitySystemComponent;
 	PlayerAttributeSet = WCParams.PlayerAttributeSet;
 	EnemyAttributeSet = WCParams.EnemyAttributeSet;
 }

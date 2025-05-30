@@ -17,7 +17,7 @@ UCirquitry_OverWidgetController* ACirquitry_HUD::GetOverlayWidgetController(cons
 	return OverlayWidgetController;
 }
 
-void ACirquitry_HUD::InitOverlay(APlayerController* PC, APlayerState* PS, UAbilitySystemComponent* ASC, UAttributeSet* PAS, UAttributeSet* EAS)
+void ACirquitry_HUD::InitOverlay(APlayerController* PC, APlayerState* PS, UAbilitySystemComponent* PASC, UAbilitySystemComponent* EASC, UAttributeSet* PAS, UAttributeSet* EAS)
 {
 	checkf(OverlayWidgetClass, TEXT("Overlay Widget Class uninitialized, please fill out BP_AuraHUD"));
 	checkf(OverlayWidgetControllerClass, TEXT("Overlay Widget Controller Class uninitialized, please fill out BP_AuraHUD"));
@@ -25,7 +25,7 @@ void ACirquitry_HUD::InitOverlay(APlayerController* PC, APlayerState* PS, UAbili
 	UUserWidget* Widget = CreateWidget<UUserWidget>(GetWorld(), OverlayWidgetClass);
 	OverlayWidget = Cast<UCirquitry_UserWidget>(Widget);
 
-	const FWidgetControllerParams WidgetControllerParams(PC, PS, ASC, PAS, EAS);
+	const FWidgetControllerParams WidgetControllerParams(PC, PS, PASC, EASC, PAS, EAS);
 	UCirquitry_OverWidgetController* WidgetController = GetOverlayWidgetController(WidgetControllerParams);
 
 	OverlayWidget->SetWidgetController(WidgetController);

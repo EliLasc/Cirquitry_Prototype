@@ -25,27 +25,57 @@ void UCirquitry_OverWidgetController::BindCallBacksToDependencies()
 	const UCirquitry_AttributeSet* PAttributeSet = CastChecked<UCirquitry_AttributeSet>(PlayerAttributeSet);
 
 	//This binds the HealthChanged function to fire whenever the health attribute changes within the attribute set
-	AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(
+	PlayerAbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(
 		PAttributeSet->GetHealthAttribute()).AddUObject(this, &UCirquitry_OverWidgetController::HealthChanged);
-	
-	//Enemy AttributeSet
-	const UCirquitry_AttributeSet* EAttributeSet = CastChecked<UCirquitry_AttributeSet>(EnemyAttributeSet);
 
-	//This binds the HealthChanged function to fire whenever the health attribute changes within the attribute set
-	AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(
-		EAttributeSet->GetHealthAttribute()).AddUObject(this, &UCirquitry_OverWidgetController::HealthChanged);
-
-	//This returns the tags on the applying GameplayEffect
-	Cast<UCirquitry_AbilitySystemComponent>(AbilitySystemComponent)->EffectAssetTags.AddLambda(
+	//This is an anonymous function and can only access global things or stuff tied to "this" (overlaywidgetcontroller)
+	//This allows for a bound event to fire when a new gameplay tag is added to the overlay widget controller
+	Cast<UCirquitry_AbilitySystemComponent>(PlayerAbilitySystemComponent)->EffectAssetTags.AddLambda(
 		[this](const FGameplayTagContainer& AssetTags)
 		{
 			//gets the tag container of any effect applied to the players AbilitySystemComponent
 			for (const FGameplayTag& Tag : AssetTags)
 			{
-				const FString Msg = FString::Printf(TEXT("GE Tag: %s"), *Tag.ToString());
-				GEngine->AddOnScreenDebugMessage(-1, 8.f, FColor::Blue, Msg);
+				FGameplayTag DescriptionTag = FGameplayTag::RequestGameplayTag(FName("Description"));
+				if (Tag.MatchesTag(DescriptionTag))
+				{
+					//if the gameplay effect has a description tag search the data table for any row names that match the tag and broadcast that row to listening widgets
+					const FUIWidgetRow* Row = GetDataTableRowByTag<FUIWidgetRow>(DescriptionWidgetDataTable, Tag);
+					DescriptionWidgetRowDelegate.Broadcast(*Row);
+				}
+			}
+		}
+	);
 
-				FUIWidgetRow* Row = GetDataTableRowByTag<FUIWidgetRow>(DescriptionWidgetDataTable, Tag);
+///
+///
+///
+///
+///
+	
+	//Enemy AttributeSet
+	const UCirquitry_AttributeSet* EAttributeSet = CastChecked<UCirquitry_AttributeSet>(EnemyAttributeSet);
+
+	//This binds the HealthChanged function to fire whenever the health attribute changes within the attribute set
+//TODO: create a new enemy ability system component variable to use
+	EnemyAbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(
+		EAttributeSet->GetHealthAttribute()).AddUObject(this, &UCirquitry_OverWidgetController::HealthChanged);
+
+	//This is an anonymous function and can only access global things or stuff tied to "this" (overlaywidgetcontroller)
+	//This allows for a bound event to fire when a new gameplay tag is added to the overlay widget controller
+	Cast<UCirquitry_AbilitySystemComponent>(EnemyAbilitySystemComponent)->EffectAssetTags.AddLambda(
+		[this](const FGameplayTagContainer& AssetTags)
+		{
+			//gets the tag container of any effect applied to the players AbilitySystemComponent
+			for (const FGameplayTag& Tag : AssetTags)
+			{
+				FGameplayTag DescriptionTag = FGameplayTag::RequestGameplayTag(FName("Description"));
+				if (Tag.MatchesTag(DescriptionTag))
+				{
+					//if the gameplay effect has a description tag search the data table for any row names that match the tag and broadcast that row to listening widgets
+					const FUIWidgetRow* Row = GetDataTableRowByTag<FUIWidgetRow>(DescriptionWidgetDataTable, Tag);
+					DescriptionWidgetRowDelegate.Broadcast(*Row);
+				}
 			}
 		}
 	);

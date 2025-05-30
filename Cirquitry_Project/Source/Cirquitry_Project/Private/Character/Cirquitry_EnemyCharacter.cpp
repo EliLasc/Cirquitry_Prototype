@@ -29,6 +29,7 @@ void ACirquitry_EnemyCharacter::BeginPlay()
 
 void ACirquitry_EnemyCharacter::InitAbilityActorInfo()
 {
+	//since no player state, the owning actor is instead the character actor itself
 	AbilitySystemComponent->InitAbilityActorInfo(this, this);
 	Cast<UCirquitry_AbilitySystemComponent>(AbilitySystemComponent)->AbilityActorInfoSet();
 }

@@ -32,15 +32,18 @@ void ACirquitry_PlayerCharacter::InitAbilityActorInfo()
 {
 	ACirquitry_PlayerState* Cirquitry_PlayerState = GetPlayerState<ACirquitry_PlayerState>();
 	check(Cirquitry_PlayerState);
+	//this isn't done for the enemy since it does not have a player state to assign as the owner actor
 	Cirquitry_PlayerState->GetAbilitySystemComponent()->InitAbilityActorInfo(Cirquitry_PlayerState, this);
 	Cast<UCirquitry_AbilitySystemComponent>(Cirquitry_PlayerState->GetAbilitySystemComponent())->AbilityActorInfoSet();
 	
 	UCirquitry_GameInstance* GameInstance = Cast<UCirquitry_GameInstance>(GetGameInstance());
 	GameInstance->SpawnManagers();
-	
+
+	//The enemy character script initializes its own variables upon spawn
 	Cirquitry_PlayerState->SpawnEnemy();
 	ACirquitry_EnemyCharacter* EnemyCharacter = Cirquitry_PlayerState->GetEnemyCharacter();
 	TObjectPtr<UAttributeSet> EnemyAttributeSet = EnemyCharacter->GetAttributeSet();
+	TObjectPtr<UAbilitySystemComponent> EnemyAbilitySystemComponent = EnemyCharacter->GetAbilitySystemComponent();
 	
 	AbilitySystemComponent = Cirquitry_PlayerState->GetAbilitySystemComponent();
 	AttributeSet = Cirquitry_PlayerState->GetAttributeSet();
@@ -49,7 +52,7 @@ void ACirquitry_PlayerCharacter::InitAbilityActorInfo()
 	{
 		if(ACirquitry_HUD* Cirquitry_HUD = Cast<ACirquitry_HUD>(Cirquitry_PlayerController->GetHUD()))
 		{
-			Cirquitry_HUD->InitOverlay(Cirquitry_PlayerController, Cirquitry_PlayerState, AbilitySystemComponent, AttributeSet, EnemyAttributeSet);
+			Cirquitry_HUD->InitOverlay(Cirquitry_PlayerController, Cirquitry_PlayerState, AbilitySystemComponent, EnemyAbilitySystemComponent, AttributeSet, EnemyAttributeSet);
 		}
 	}
 	
