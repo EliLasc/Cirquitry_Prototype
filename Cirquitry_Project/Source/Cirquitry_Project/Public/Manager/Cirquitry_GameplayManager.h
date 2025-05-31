@@ -5,9 +5,10 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "GameplayEffectTypes.h"
-#include "Cirquitry_SpellcastingManager.generated.h"
+#include "Cirquitry_GameplayManager.generated.h"
 
 class UAbilitySystemComponent;
+class UAttributeSet;
 class UGameplayEffect;
 
 /** Notify interested parties that ability spec has been modified */
@@ -16,7 +17,7 @@ class UGameplayEffect;
 /** Delegate for when an effect is applied */
 //DECLARE_MULTICAST_DELEGATE_ThreeParams(FOnGameplayEffectAppliedDelegate, UAbilitySystemComponent*, const FGameplayEffectSpec&, FActiveGameplayEffectHandle);
 
-/** Returns a list of all attributes for this abilty system component */
+/** Returns a list of all attributes for this ability system component */
 //UFUNCTION(BlueprintPure, Category="Gameplay Attributes")
 //void GetAllAttributes(TArray<FGameplayAttribute>& OutAttributes);
 
@@ -108,12 +109,13 @@ enum class EEffectRemovalPolicy
 };
 
 UCLASS()
-class CIRQUITRY_PROJECT_API ACirquitry_SpellcastingManager : public AActor
+class CIRQUITRY_PROJECT_API ACirquitry_GameplayManager : public AActor
 {
 	GENERATED_BODY()
 	
 public:	
-	ACirquitry_SpellcastingManager();
+	ACirquitry_GameplayManager();
+	virtual void SetSpawnVariables(AActor* PC, AActor* EC);
 
 protected:
 	UPROPERTY()
@@ -139,6 +141,12 @@ protected:
 	
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Applied Effects")
 	EEffectRemovalPolicy InfiniteEffectRemovalPolicy = EEffectRemovalPolicy::RemoveOnEndOverlap;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Character")
+	AActor* PlayerCharacter;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Character")
+	AActor* EnemyCharacter;
 
 	TMap<FActiveGameplayEffectHandle, UAbilitySystemComponent*> ActiveEffectHandles;
 };

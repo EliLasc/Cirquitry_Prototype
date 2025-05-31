@@ -4,7 +4,6 @@
 
 #include "CoreMinimal.h"
 #include "UI/WidgetController/Cirquitry_WidgetController.h"
-#include "Game/Cirquitry_GameInstance.h"
 #include "Cirquitry_OverWidgetController.generated.h"
 
 //Creates a struct to act as a base for a structure blueprint to be made from
@@ -72,9 +71,6 @@ protected:
 	//Contains the data table of all descriptions that need to be displayed
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Widget Data")
 	TObjectPtr<UDataTable> DescriptionWidgetDataTable;
-
-	UPROPERTY()
-	TObjectPtr<UCirquitry_GameInstance> GameInstance;
 
 	template<typename T>
 	T* GetDataTableRowByTag(UDataTable* DataTable, const FGameplayTag& Tag);

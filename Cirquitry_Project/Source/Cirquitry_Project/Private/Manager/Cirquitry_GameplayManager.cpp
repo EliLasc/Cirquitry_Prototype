@@ -1,12 +1,12 @@
 // Copyright Cirquitry
 
 
-#include "Manager/Cirquitry_SpellcastingManager.h"
-
+#include "Manager/Cirquitry_GameplayManager.h"
 #include "AbilitySystemBlueprintLibrary.h"
 #include "AbilitySystem/Cirquitry_AbilitySystemComponent.h"
 
-ACirquitry_SpellcastingManager::ACirquitry_SpellcastingManager()
+// Sets default values
+ACirquitry_GameplayManager::ACirquitry_GameplayManager()
 {
 	PrimaryActorTick.bCanEverTick = false;
 
@@ -15,7 +15,14 @@ ACirquitry_SpellcastingManager::ACirquitry_SpellcastingManager()
 	AbilitySystemComponent->SetReplicationMode(EGameplayEffectReplicationMode::Mixed);
 }
 
-void ACirquitry_SpellcastingManager::ApplyEffectToTarget(AActor* TargetActor, TSubclassOf<UGameplayEffect> GameplayEffectClass)
+void ACirquitry_GameplayManager::SetSpawnVariables(AActor* PC, AActor* EC)
+{
+	PlayerCharacter = PC;
+	EnemyCharacter = EC;
+}
+
+void ACirquitry_GameplayManager::ApplyEffectToTarget(AActor* TargetActor,
+                                                     TSubclassOf<UGameplayEffect> GameplayEffectClass)
 {
 	UAbilitySystemComponent* TargetASC = UAbilitySystemBlueprintLibrary::GetAbilitySystemComponent(TargetActor);
 	if (TargetASC == nullptr) return;
@@ -35,9 +42,8 @@ void ACirquitry_SpellcastingManager::ApplyEffectToTarget(AActor* TargetActor, TS
 	}
 }
 
-void ACirquitry_SpellcastingManager::CastSpellEffect(AActor* TargetActor)
+void ACirquitry_GameplayManager::CastSpellEffect(AActor* TargetActor)
 {
-
+	
 }
-
 

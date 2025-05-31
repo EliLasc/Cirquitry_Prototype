@@ -2,14 +2,12 @@
 
 
 #include "Character/Cirquitry_PlayerCharacter.h"
-
-#include "AbilitySystem/Cirquitry_AbilitySystemComponent.h"
-#include "AbilitySystem/Cirquitry_AttributeSet.h"
 #include "Character/Cirquitry_EnemyCharacter.h"
-#include "Game/Cirquitry_GameInstance.h"
 #include "Player/Cirquitry_PlayerController.h"
 #include "Player/Cirquitry_PlayerState.h"
 #include "UI/HUD/Cirquitry_HUD.h"
+#include "AbilitySystem/Cirquitry_AbilitySystemComponent.h"
+#include "AbilitySystem/Cirquitry_AttributeSet.h"
 
 ACirquitry_PlayerCharacter::ACirquitry_PlayerCharacter()
 {
@@ -27,7 +25,6 @@ void ACirquitry_PlayerCharacter::OnRep_PlayerState()
 	Super::OnRep_PlayerState();
 }
 
-
 void ACirquitry_PlayerCharacter::InitAbilityActorInfo()
 {
 	ACirquitry_PlayerState* Cirquitry_PlayerState = GetPlayerState<ACirquitry_PlayerState>();
@@ -35,9 +32,6 @@ void ACirquitry_PlayerCharacter::InitAbilityActorInfo()
 	//this isn't done for the enemy since it does not have a player state to assign as the owner actor
 	Cirquitry_PlayerState->GetAbilitySystemComponent()->InitAbilityActorInfo(Cirquitry_PlayerState, this);
 	Cast<UCirquitry_AbilitySystemComponent>(Cirquitry_PlayerState->GetAbilitySystemComponent())->AbilityActorInfoSet();
-	
-	UCirquitry_GameInstance* GameInstance = Cast<UCirquitry_GameInstance>(GetGameInstance());
-	GameInstance->SpawnManagers();
 
 	//The enemy character script initializes its own variables upon spawn
 	Cirquitry_PlayerState->SpawnEnemy();
@@ -58,4 +52,10 @@ void ACirquitry_PlayerCharacter::InitAbilityActorInfo()
 
 	InitializePreCombatAttributes();
 	InitializeCombatAttributes();
+	
+	GameplayManager = GetWorld()->SpawnActor<ACirquitry_GameplayManager>(GameplayManagerClass, FVector(0,0,0), FRotator(0,0,0));
+	Cast<ACirquitry_GameplayManager>(GameplayManager)->SetSpawnVariables(this, EnemyCharacter);
 }
+
+	
+

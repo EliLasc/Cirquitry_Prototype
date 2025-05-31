@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Character/Cirquitry_CharacterBase.h"
+#include "Manager/Cirquitry_GameplayManager.h"
 #include "Cirquitry_PlayerCharacter.generated.h"
 
 /**
@@ -18,6 +19,12 @@ public:
 	ACirquitry_PlayerCharacter();
 	virtual void PossessedBy(AController* NewController) override;
 	virtual void OnRep_PlayerState() override;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Manager")
+	TSubclassOf<ACirquitry_GameplayManager> GameplayManagerClass;
+
+	UPROPERTY()
+	AActor* GameplayManager;
 
 private:
 	virtual void InitAbilityActorInfo() override;
