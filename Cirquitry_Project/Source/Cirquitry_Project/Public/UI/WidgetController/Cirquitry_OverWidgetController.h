@@ -14,17 +14,35 @@ struct FUIWidgetRow : public FTableRowBase
 	GENERATED_BODY()
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
-	FGameplayTag MessageTag = FGameplayTag();
+	FGameplayTag DescriptionTag = FGameplayTag();
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
-	FText Message = FText();
+	FGameplayTag RarityTag = FGameplayTag();
 
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	FGameplayTag TypeTag = FGameplayTag();
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	FText NameText= FText();
+	
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	FText DescriptionText= FText();
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	FText TypeText = FText();
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	FText RarityText = FText();
+	
 	//class is used to forward declare this since it isn't declared in this part of the script
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
-	TSubclassOf<class UCirquitry_UserWidget> MessageWidget;
+	TSubclassOf<class UCirquitry_UserWidget> DescriptionWidget;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
-	UTexture2D* Image = nullptr;
+	UTexture2D* IconImage = nullptr;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	UTexture2D* TypeImage = nullptr;
 };
 
 class UCirquitry_UserWidget;
