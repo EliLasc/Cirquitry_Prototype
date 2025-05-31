@@ -55,5 +55,7 @@ void ACirquitry_PlayerCharacter::InitAbilityActorInfo()
 			Cirquitry_HUD->InitOverlay(Cirquitry_PlayerController, Cirquitry_PlayerState, AbilitySystemComponent, EnemyAbilitySystemComponent, AttributeSet, EnemyAttributeSet);
 		}
 	}
-	
+
+	InitializePreCombatAttributes();
+	InitializeCombatAttributes();
 }

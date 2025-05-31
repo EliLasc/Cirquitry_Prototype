@@ -25,8 +25,9 @@ void UCirquitry_OverWidgetController::BindCallBacksToDependencies()
 	const UCirquitry_AttributeSet* PAttributeSet = CastChecked<UCirquitry_AttributeSet>(PlayerAttributeSet);
 
 	//This binds the HealthChanged function to fire whenever the health attribute changes within the attribute set
-	PlayerAbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(
-		PAttributeSet->GetHealthAttribute()).AddUObject(this, &UCirquitry_OverWidgetController::HealthChanged);
+	PlayerAbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(PAttributeSet->GetHealthAttribute()).AddLambda(
+		[this](const FOnAttributeChangeData& Data)
+			{OnHealthChanged.Broadcast(Data.NewValue);});
 
 	//This is an anonymous function and can only access global things or stuff tied to "this" (overlaywidgetcontroller)
 	//This allows for a bound event to fire when a new gameplay tag is added to the overlay widget controller
@@ -56,13 +57,10 @@ void UCirquitry_OverWidgetController::BindCallBacksToDependencies()
 	//Enemy AttributeSet
 	const UCirquitry_AttributeSet* EAttributeSet = CastChecked<UCirquitry_AttributeSet>(EnemyAttributeSet);
 
-	//This binds the HealthChanged function to fire whenever the health attribute changes within the attribute set
-//TODO: create a new enemy ability system component variable to use
-	EnemyAbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(
-		EAttributeSet->GetHealthAttribute()).AddUObject(this, &UCirquitry_OverWidgetController::HealthChanged);
-
-	//This is an anonymous function and can only access global things or stuff tied to "this" (overlaywidgetcontroller)
-	//This allows for a bound event to fire when a new gameplay tag is added to the overlay widget controller
+	EnemyAbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(EAttributeSet->GetHealthAttribute()).AddLambda(
+		[this](const FOnAttributeChangeData& Data)
+			{OnHealthChanged.Broadcast(Data.NewValue);});
+	
 	Cast<UCirquitry_AbilitySystemComponent>(EnemyAbilitySystemComponent)->EffectAssetTags.AddLambda(
 		[this](const FGameplayTagContainer& AssetTags)
 		{
@@ -79,10 +77,4 @@ void UCirquitry_OverWidgetController::BindCallBacksToDependencies()
 			}
 		}
 	);
-}
-
-void UCirquitry_OverWidgetController::HealthChanged(const FOnAttributeChangeData& Data) const
-{
-	OnHealthChanged.Broadcast(Data.NewValue);
-
 }

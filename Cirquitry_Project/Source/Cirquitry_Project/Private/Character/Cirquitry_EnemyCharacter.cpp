@@ -16,15 +16,11 @@ ACirquitry_EnemyCharacter::ACirquitry_EnemyCharacter()
 	AttributeSet = CreateDefaultSubobject<UCirquitry_AttributeSet>("AttributeSet");
 }
 
-UAbilitySystemComponent* ACirquitry_EnemyCharacter::GetAbilitySystemComponent() const
-{
-	return AbilitySystemComponent;
-}
-
 void ACirquitry_EnemyCharacter::BeginPlay()
 {
 	Super::BeginPlay();
 	InitAbilityActorInfo();
+	InitializeCombatAttributes();
 }
 
 void ACirquitry_EnemyCharacter::InitAbilityActorInfo()

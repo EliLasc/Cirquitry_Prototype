@@ -13,12 +13,6 @@
 UCirquitry_AttributeSet::UCirquitry_AttributeSet()
 {
 	//const FCirquitry_GameplayTags& GameplayTags = FCirquitry_GameplayTags::Get();
-	
-	/* Primary Attributes */
-	//TagsToAttributes.Add(GameplayTags.Attributes_Primary_Strength, GetStrengthAttribute);
-
-	/* Secondary Attributes */
-	//TagsToAttributes.Add(GameplayTags.Attributes_Secondary_Armor, GetArmorAttribute);
 }
 
 void UCirquitry_AttributeSet::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
@@ -26,10 +20,15 @@ void UCirquitry_AttributeSet::GetLifetimeReplicatedProps(TArray<FLifetimePropert
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
 	/*
-	 * Vital Attributes
+	 * Combat Attributes
 	 */
 
 	DOREPLIFETIME_CONDITION_NOTIFY(UCirquitry_AttributeSet, Health, COND_None, REPNOTIFY_Always)
+	DOREPLIFETIME_CONDITION_NOTIFY(UCirquitry_AttributeSet, MaxHealth, COND_None, REPNOTIFY_Always)
+
+	/*
+	 * PreCombat Attributes
+	 */
 	
 }
 
@@ -37,10 +36,17 @@ void UCirquitry_AttributeSet::PreAttributeChange(const FGameplayAttribute& Attri
 {
 	Super::PreAttributeChange(Attribute, NewValue);
 
+	/*
+	 * Combat Attributes
+	 */
+
+	//Any attributes that are clamped need the max value set first in the gameplay effect
 	if(Attribute == GetHealthAttribute())
-	{
-		//NewValue = FMath::Clamp(NewValue, 0.f, GetMaxHealth());
-	}
+	{NewValue = FMath::Clamp(NewValue, 0.f, GetMaxHealth());}
+
+	/*
+	 * PreCombat Attributes
+	 */
 }
 
 void UCirquitry_AttributeSet::SetEffectProperties(const FGameplayEffectModCallbackData& Data, FEffectProperties& Props) const
@@ -57,9 +63,7 @@ void UCirquitry_AttributeSet::SetEffectProperties(const FGameplayEffectModCallba
 		if(Props.SourceController == nullptr && Props.SourceAvatarActor != nullptr)
 		{
 			if(const APawn* Pawn = Cast<APawn>(Props.SourceAvatarActor))
-			{
-				Props.SourceController = Pawn->GetController();
-			}
+			{Props.SourceController = Pawn->GetController();}
 		}
 		if(Props.SourceController)
 		{
@@ -83,15 +87,17 @@ void UCirquitry_AttributeSet::PostGameplayEffectExecute(const FGameplayEffectMod
 	FEffectProperties Props;
 	SetEffectProperties(Data, Props);
 
+	/*
+	 * Combat Attributes
+	 */
+	
 	//Since the clamp in PreGameplayEffectExecute only sets the displayed value, the post GameplayEffect will then set the value
 	if(Data.EvaluatedData.Attribute == GetHealthAttribute())
-	{
-		//SetHealth(FMath::Clamp(GetHealth(), 0.f, GetMaxHealth()));
-	}
-	//if(Data.EvaluatedData.Attribute == GetManaAttribute())
-	{
-		//SetMana(FMath::Clamp(GetMana(), 0.f, GetMaxMana()));
-	}
+	{SetHealth(FMath::Clamp(GetHealth(), 0.f, GetMaxHealth()));}
+
+	/*
+	 * PreCombat Attributes
+	 */
 }
 
 /*
@@ -99,7 +105,12 @@ void UCirquitry_AttributeSet::PostGameplayEffectExecute(const FGameplayEffectMod
  */
 
 void UCirquitry_AttributeSet::OnRep_Health(const FGameplayAttributeData OldHealth) const
-{
-	GAMEPLAYATTRIBUTE_REPNOTIFY(UCirquitry_AttributeSet, Health, OldHealth);
-}
+{GAMEPLAYATTRIBUTE_REPNOTIFY(UCirquitry_AttributeSet, Health, OldHealth);}
+
+void UCirquitry_AttributeSet::OnRep_MaxHealth(const FGameplayAttributeData OldMaxHealth) const
+{GAMEPLAYATTRIBUTE_REPNOTIFY(UCirquitry_AttributeSet, MaxHealth, OldMaxHealth);}
+
+/*
+ * PreCombat Attributes
+ */
 

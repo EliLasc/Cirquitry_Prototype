@@ -14,7 +14,7 @@ struct FUIWidgetRow : public FTableRowBase
 	GENERATED_BODY()
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
-	FGameplayTag DescriptionTag = FGameplayTag();
+	FGameplayTag NameTag = FGameplayTag();
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	FGameplayTag RarityTag = FGameplayTag();
@@ -46,8 +46,8 @@ struct FUIWidgetRow : public FTableRowBase
 };
 
 class UCirquitry_UserWidget;
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnHealthChangedSignature, float, NewHealth);
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnAttributeChangedSignature, float, NewHealth);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FDescriptionWidgetRowSignature, FUIWidgetRow, Row);
 
 /**
@@ -62,7 +62,7 @@ public:
 	virtual void BindCallBacksToDependencies() override;
 
 	UPROPERTY(BlueprintAssignable, Category = "GAS|Attributes")
-	FOnHealthChangedSignature OnHealthChanged;
+	FOnAttributeChangedSignature OnHealthChanged;
 
 	UPROPERTY(BlueprintAssignable, Category = "GAS|Description")
 	FDescriptionWidgetRowSignature DescriptionWidgetRowDelegate;
@@ -72,8 +72,6 @@ protected:
 	//Contains the data table of all descriptions that need to be displayed
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Widget Data")
 	TObjectPtr<UDataTable> DescriptionWidgetDataTable;
-	
-	void HealthChanged(const FOnAttributeChangeData& Data) const;
 
 	UPROPERTY()
 	TObjectPtr<UCirquitry_GameInstance> GameInstance;

@@ -46,8 +46,6 @@ struct FEffectProperties
 	UPROPERTY()
 	ACharacter* TargetCharacter = nullptr;
 };
-//typedef is specific to the FGameplayAttribuite() signature, but TStaticFucntion Ptr is generic
-//typedef TBaseStaticDelegateInstance<FGameplayAttribute(), FDefaultDelegateUserPolicy>::FFuncPtr FAttributeFuncPtr;
 template<class T>
 using TStaticFuncPtr = typename TBaseStaticDelegateInstance<T, FDefaultDelegateUserPolicy>::FFuncPtr;
 
@@ -76,12 +74,20 @@ class CIRQUITRY_PROJECT_API UCirquitry_AttributeSet : public UAttributeSet
 	FGameplayAttributeData Health;
 	ATTRIBUTE_ACCESSORS(UCirquitry_AttributeSet, Health);
 
-	/*
-	 *Combat Variables
-	 */
-
 	UFUNCTION()
 	void OnRep_Health(const FGameplayAttributeData OldHealth) const;
+
+	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_MaxHealth, Category = "Combat Variables")
+	FGameplayAttributeData MaxHealth;
+	ATTRIBUTE_ACCESSORS(UCirquitry_AttributeSet, MaxHealth);
+
+	UFUNCTION()
+	void OnRep_MaxHealth(const FGameplayAttributeData OldMaxHealth) const;
+	
+	/*
+	 *PreCombat Variables
+	 */
+
 
 
 
