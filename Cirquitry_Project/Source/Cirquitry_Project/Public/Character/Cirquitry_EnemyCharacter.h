@@ -3,7 +3,6 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "AbilitySystemInterface.h"
 #include "Character/Cirquitry_CharacterBase.h"
 #include "Cirquitry_EnemyCharacter.generated.h"
 

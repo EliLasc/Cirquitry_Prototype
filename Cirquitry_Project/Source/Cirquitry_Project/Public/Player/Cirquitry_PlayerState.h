@@ -23,9 +23,6 @@ public:
 	ACirquitry_PlayerState();
 	virtual  UAbilitySystemComponent* GetAbilitySystemComponent() const override;
 	UAttributeSet* GetAttributeSet() const {return AttributeSet; }
-	ACirquitry_EnemyCharacter* GetEnemyCharacter() const {return EnemyCharacter; }
-	
-	UFUNCTION(BlueprintCallable) virtual void SpawnEnemy();
 	
 protected:
 	UPROPERTY()
@@ -33,11 +30,4 @@ protected:
 
 	UPROPERTY()
 	TObjectPtr<UAttributeSet> AttributeSet;
-
-	UPROPERTY()
-	TObjectPtr<ACirquitry_EnemyCharacter> EnemyCharacter;
-
-private:
-	UPROPERTY(EditDefaultsOnly, Category = "EnemyCharacter")
-	TSubclassOf<ACirquitry_EnemyCharacter> EnemyCharacterClass;
 };

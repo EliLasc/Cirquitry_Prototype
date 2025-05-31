@@ -8,11 +8,7 @@
 #include "UI/HUD/Cirquitry_HUD.h"
 #include "AbilitySystem/Cirquitry_AbilitySystemComponent.h"
 #include "AbilitySystem/Cirquitry_AttributeSet.h"
-
-ACirquitry_PlayerCharacter::ACirquitry_PlayerCharacter()
-{
-	
-}
+#include "Kismet/GameplayStatics.h"
 
 void ACirquitry_PlayerCharacter::PossessedBy(AController* NewController)
 {
@@ -29,13 +25,11 @@ void ACirquitry_PlayerCharacter::InitAbilityActorInfo()
 {
 	ACirquitry_PlayerState* Cirquitry_PlayerState = GetPlayerState<ACirquitry_PlayerState>();
 	check(Cirquitry_PlayerState);
-	//this isn't done for the enemy since it does not have a player state to assign as the owner actor
 	Cirquitry_PlayerState->GetAbilitySystemComponent()->InitAbilityActorInfo(Cirquitry_PlayerState, this);
 	Cast<UCirquitry_AbilitySystemComponent>(Cirquitry_PlayerState->GetAbilitySystemComponent())->AbilityActorInfoSet();
 
 	//The enemy character script initializes its own variables upon spawn
-	Cirquitry_PlayerState->SpawnEnemy();
-	ACirquitry_EnemyCharacter* EnemyCharacter = Cirquitry_PlayerState->GetEnemyCharacter();
+	ACirquitry_EnemyCharacter* EnemyCharacter = GetWorld()->SpawnActor<ACirquitry_EnemyCharacter>(EnemyCharacterClass, FVector(0,0,0), FRotator(0,0,0));
 	TObjectPtr<UAttributeSet> EnemyAttributeSet = EnemyCharacter->GetAttributeSet();
 	TObjectPtr<UAbilitySystemComponent> EnemyAbilitySystemComponent = EnemyCharacter->GetAbilitySystemComponent();
 	
@@ -53,8 +47,16 @@ void ACirquitry_PlayerCharacter::InitAbilityActorInfo()
 	InitializePreCombatAttributes();
 	InitializeCombatAttributes();
 	
-	GameplayManager = GetWorld()->SpawnActor<ACirquitry_GameplayManager>(GameplayManagerClass, FVector(0,0,0), FRotator(0,0,0));
-	Cast<ACirquitry_GameplayManager>(GameplayManager)->SetSpawnVariables(this, EnemyCharacter);
+	GameplayManager = UGameplayStatics::BeginDeferredActorSpawnFromClass(GetWorld(), GameplayManagerClass, FTransform::Identity);
+	if(GameplayManager)
+	{
+		ACirquitry_GameplayManager* CustomGameplayManager = Cast<ACirquitry_GameplayManager>(GameplayManager);
+		CustomGameplayManager->SetSpawnVariables(this, EnemyCharacter);
+		UGameplayStatics::FinishSpawningActor(GameplayManager, FTransform::Identity);
+	}
+	
+	//GameplayManager = GetWorld()->SpawnActor<ACirquitry_GameplayManager>(GameplayManagerClass, FVector(0,0,0), FRotator(0,0,0));
+	//Cast<ACirquitry_GameplayManager>(GameplayManager)->SetSpawnVariables(this, EnemyCharacter);
 }
 
 	

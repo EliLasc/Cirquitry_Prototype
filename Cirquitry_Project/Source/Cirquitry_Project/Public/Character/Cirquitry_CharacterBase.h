@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "AbilitySystemComponent.h"
+#include "AbilitySystemInterface.h"
 #include "GameFramework/Pawn.h"
 #include "Cirquitry_CharacterBase.generated.h"
 
@@ -12,13 +13,13 @@ class UAttributeSet;
 class UGameplayEffect;
 
 UCLASS()
-class CIRQUITRY_PROJECT_API ACirquitry_CharacterBase : public APawn
+class CIRQUITRY_PROJECT_API ACirquitry_CharacterBase : public APawn, public IAbilitySystemInterface
 {
 	GENERATED_BODY()
 
 public:
 	ACirquitry_CharacterBase();
-	virtual  UAbilitySystemComponent* GetAbilitySystemComponent() const {return AbilitySystemComponent;}
+	virtual  UAbilitySystemComponent* GetAbilitySystemComponent() const override;
 	UAttributeSet* GetAttributeSet() const {return AttributeSet; }
 
 protected:

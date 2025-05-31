@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "Character/Cirquitry_CharacterBase.h"
 #include "Manager/Cirquitry_GameplayManager.h"
+#include "Cirquitry_EnemyCharacter.h"
 #include "Cirquitry_PlayerCharacter.generated.h"
 
 /**
@@ -16,7 +17,6 @@ class CIRQUITRY_PROJECT_API ACirquitry_PlayerCharacter : public ACirquitry_Chara
 	GENERATED_BODY()
 
 public:
-	ACirquitry_PlayerCharacter();
 	virtual void PossessedBy(AController* NewController) override;
 	virtual void OnRep_PlayerState() override;
 	
@@ -28,4 +28,7 @@ public:
 
 private:
 	virtual void InitAbilityActorInfo() override;
+	
+	UPROPERTY(EditDefaultsOnly, Category = "EnemyCharacter")
+	TSubclassOf<ACirquitry_EnemyCharacter> EnemyCharacterClass;
 };

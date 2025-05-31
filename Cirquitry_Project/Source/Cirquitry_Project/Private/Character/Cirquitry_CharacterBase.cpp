@@ -9,6 +9,11 @@ ACirquitry_CharacterBase::ACirquitry_CharacterBase()
 	PrimaryActorTick.bCanEverTick = false;
 }
 
+UAbilitySystemComponent* ACirquitry_CharacterBase::GetAbilitySystemComponent() const
+{
+	return AbilitySystemComponent;
+}
+
 void ACirquitry_CharacterBase::BeginPlay()
 {
 	Super::BeginPlay();
