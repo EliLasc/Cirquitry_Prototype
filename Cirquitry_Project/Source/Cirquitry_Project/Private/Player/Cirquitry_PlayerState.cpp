@@ -5,6 +5,7 @@
 
 #include "AbilitySystem/Cirquitry_AbilitySystemComponent.h"
 #include "AbilitySystem/Cirquitry_AttributeSet.h"
+#include "Net/UnrealNetwork.h"
 
 ACirquitry_PlayerState::ACirquitry_PlayerState()
 {
@@ -16,7 +17,19 @@ ACirquitry_PlayerState::ACirquitry_PlayerState()
 	SetNetUpdateFrequency(100.f);
 }
 
+void ACirquitry_PlayerState::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
+{
+	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
+
+	DOREPLIFETIME(ACirquitry_PlayerState, Round);
+}
+
 UAbilitySystemComponent* ACirquitry_PlayerState::GetAbilitySystemComponent() const
 {
 	return AbilitySystemComponent;
+}
+
+void ACirquitry_PlayerState::OnRep_Round(int32 OldRound)
+{
+	
 }

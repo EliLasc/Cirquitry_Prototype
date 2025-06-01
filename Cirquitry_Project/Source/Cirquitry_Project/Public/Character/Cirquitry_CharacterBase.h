@@ -6,6 +6,7 @@
 #include "AbilitySystemComponent.h"
 #include "AbilitySystemInterface.h"
 #include "GameFramework/Pawn.h"
+#include "Interaction/Cirquitry_CombatInterface.h"
 #include "Cirquitry_CharacterBase.generated.h"
 
 class UAbilitySystemComponent;
@@ -13,7 +14,7 @@ class UAttributeSet;
 class UGameplayEffect;
 
 UCLASS()
-class CIRQUITRY_PROJECT_API ACirquitry_CharacterBase : public APawn, public IAbilitySystemInterface
+class CIRQUITRY_PROJECT_API ACirquitry_CharacterBase : public APawn, public IAbilitySystemInterface, public ICirquitry_CombatInterface
 {
 	GENERATED_BODY()
 
@@ -31,16 +32,14 @@ protected:
 	UPROPERTY()
 	TObjectPtr<UAttributeSet> AttributeSet;
 
-	virtual  void InitAbilityActorInfo();
+	virtual void InitAbilityActorInfo();
 
+	void ApplyEffectToSelf(TSubclassOf<UGameplayEffect> GameplayEffectClass, float Round) const;
+	void InitializeDefaultAttributes() const;
+	
 	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "Attributes")
 	TSubclassOf<UGameplayEffect> DefaultPreCombatAttributes;
 
-	void InitializePreCombatAttributes() const;
-
 	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "Attributes")
 	TSubclassOf<UGameplayEffect> DefaultCombatAttributes;
-
-	void InitializeCombatAttributes() const;
-
 };

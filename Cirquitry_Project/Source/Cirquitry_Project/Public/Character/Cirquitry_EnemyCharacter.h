@@ -15,8 +15,13 @@ class CIRQUITRY_PROJECT_API ACirquitry_EnemyCharacter : public ACirquitry_Charac
 	GENERATED_BODY()
 public:
 	ACirquitry_EnemyCharacter();
+
+	virtual int32 GetRound() override;
 	
 protected:
 	virtual void BeginPlay() override;
 	virtual void InitAbilityActorInfo() override;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Character Class Defaults")
+	int32 Round = 1;
 };

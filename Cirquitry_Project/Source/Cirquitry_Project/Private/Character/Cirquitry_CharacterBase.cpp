@@ -24,22 +24,19 @@ void ACirquitry_CharacterBase::InitAbilityActorInfo()
 	
 }
 
-void ACirquitry_CharacterBase::InitializePreCombatAttributes() const
+void ACirquitry_CharacterBase::ApplyEffectToSelf(TSubclassOf<UGameplayEffect> GameplayEffectClass, float Round) const
 {
 	check(IsValid(GetAbilitySystemComponent()));
-	check(DefaultPreCombatAttributes);
+	check(GameplayEffectClass);
 	FGameplayEffectContextHandle ContextHandle = GetAbilitySystemComponent()->MakeEffectContext();
-	FGameplayEffectSpecHandle SpecHandle = GetAbilitySystemComponent()->MakeOutgoingSpec(DefaultPreCombatAttributes, 1.f, ContextHandle);
+	FGameplayEffectSpecHandle SpecHandle = GetAbilitySystemComponent()->MakeOutgoingSpec(GameplayEffectClass, 1.f, ContextHandle);
 	GetAbilitySystemComponent()->ApplyGameplayEffectSpecToTarget(*SpecHandle.Data.Get(), GetAbilitySystemComponent());
 }
 
-void ACirquitry_CharacterBase::InitializeCombatAttributes() const
+void ACirquitry_CharacterBase::InitializeDefaultAttributes() const
 {
-	check(IsValid(GetAbilitySystemComponent()));
-	check(DefaultCombatAttributes);
-	FGameplayEffectContextHandle ContextHandle = GetAbilitySystemComponent()->MakeEffectContext();
-	FGameplayEffectSpecHandle SpecHandle = GetAbilitySystemComponent()->MakeOutgoingSpec(DefaultCombatAttributes, 1.f, ContextHandle);
-	GetAbilitySystemComponent()->ApplyGameplayEffectSpecToTarget(*SpecHandle.Data.Get(), GetAbilitySystemComponent());
+	ApplyEffectToSelf(DefaultPreCombatAttributes, 1.f);
+	ApplyEffectToSelf(DefaultCombatAttributes, 1.f);
 }
 
 

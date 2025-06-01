@@ -25,6 +25,7 @@ void UCirquitry_AttributeSet::GetLifetimeReplicatedProps(TArray<FLifetimePropert
 
 	DOREPLIFETIME_CONDITION_NOTIFY(UCirquitry_AttributeSet, Health, COND_None, REPNOTIFY_Always)
 	DOREPLIFETIME_CONDITION_NOTIFY(UCirquitry_AttributeSet, MaxHealth, COND_None, REPNOTIFY_Always)
+	DOREPLIFETIME_CONDITION_NOTIFY(UCirquitry_AttributeSet, CastSpeed, COND_None, REPNOTIFY_Always)
 
 	/*
 	 * PreCombat Attributes
@@ -109,6 +110,9 @@ void UCirquitry_AttributeSet::OnRep_Health(const FGameplayAttributeData OldHealt
 
 void UCirquitry_AttributeSet::OnRep_MaxHealth(const FGameplayAttributeData OldMaxHealth) const
 {GAMEPLAYATTRIBUTE_REPNOTIFY(UCirquitry_AttributeSet, MaxHealth, OldMaxHealth);}
+
+void UCirquitry_AttributeSet::OnRep_CastSpeed(const FGameplayAttributeData OldCastSpeed) const
+{GAMEPLAYATTRIBUTE_REPNOTIFY(UCirquitry_AttributeSet, CastSpeed, OldCastSpeed);}
 
 /*
  * PreCombat Attributes

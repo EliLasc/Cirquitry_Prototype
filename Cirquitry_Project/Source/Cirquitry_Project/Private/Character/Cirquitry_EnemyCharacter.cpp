@@ -16,11 +16,16 @@ ACirquitry_EnemyCharacter::ACirquitry_EnemyCharacter()
 	AttributeSet = CreateDefaultSubobject<UCirquitry_AttributeSet>("AttributeSet");
 }
 
+int32 ACirquitry_EnemyCharacter::GetRound()
+{
+	return Round;
+}
+
 void ACirquitry_EnemyCharacter::BeginPlay()
 {
 	Super::BeginPlay();
 	InitAbilityActorInfo();
-	InitializeCombatAttributes();
+	InitializeDefaultAttributes();
 }
 
 void ACirquitry_EnemyCharacter::InitAbilityActorInfo()

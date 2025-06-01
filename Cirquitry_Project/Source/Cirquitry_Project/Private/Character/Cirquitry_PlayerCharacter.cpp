@@ -21,6 +21,13 @@ void ACirquitry_PlayerCharacter::OnRep_PlayerState()
 	Super::OnRep_PlayerState();
 }
 
+int32 ACirquitry_PlayerCharacter::GetRound()
+{
+	const ACirquitry_PlayerState* Cirquitry_PlayerState = GetPlayerState<ACirquitry_PlayerState>();
+	check(Cirquitry_PlayerState);
+	return Cirquitry_PlayerState->GetRound();
+}
+
 void ACirquitry_PlayerCharacter::InitAbilityActorInfo()
 {
 	ACirquitry_PlayerState* Cirquitry_PlayerState = GetPlayerState<ACirquitry_PlayerState>();
@@ -44,8 +51,7 @@ void ACirquitry_PlayerCharacter::InitAbilityActorInfo()
 		}
 	}
 
-	InitializePreCombatAttributes();
-	InitializeCombatAttributes();
+	InitializeDefaultAttributes();
 	
 	GameplayManager = UGameplayStatics::BeginDeferredActorSpawnFromClass(GetWorld(), GameplayManagerClass, FTransform::Identity);
 	if(GameplayManager)
@@ -54,9 +60,6 @@ void ACirquitry_PlayerCharacter::InitAbilityActorInfo()
 		CustomGameplayManager->SetSpawnVariables(this, EnemyCharacter);
 		UGameplayStatics::FinishSpawningActor(GameplayManager, FTransform::Identity);
 	}
-	
-	//GameplayManager = GetWorld()->SpawnActor<ACirquitry_GameplayManager>(GameplayManagerClass, FVector(0,0,0), FRotator(0,0,0));
-	//Cast<ACirquitry_GameplayManager>(GameplayManager)->SetSpawnVariables(this, EnemyCharacter);
 }
 
 	

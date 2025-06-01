@@ -83,6 +83,13 @@ class CIRQUITRY_PROJECT_API UCirquitry_AttributeSet : public UAttributeSet
 
 	UFUNCTION()
 	void OnRep_MaxHealth(const FGameplayAttributeData OldMaxHealth) const;
+
+	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_CastSpeed, Category = "Combat Variables")
+	FGameplayAttributeData CastSpeed;
+	ATTRIBUTE_ACCESSORS(UCirquitry_AttributeSet, CastSpeed);
+
+	UFUNCTION()
+	void OnRep_CastSpeed(const FGameplayAttributeData OldCastSpeed) const;
 	
 	/*
 	 *PreCombat Variables

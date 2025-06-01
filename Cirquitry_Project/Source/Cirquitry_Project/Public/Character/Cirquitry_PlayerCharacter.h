@@ -19,6 +19,8 @@ class CIRQUITRY_PROJECT_API ACirquitry_PlayerCharacter : public ACirquitry_Chara
 public:
 	virtual void PossessedBy(AController* NewController) override;
 	virtual void OnRep_PlayerState() override;
+
+	virtual int32 GetRound() override;
 	
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Manager")
 	TSubclassOf<ACirquitry_GameplayManager> GameplayManagerClass;
