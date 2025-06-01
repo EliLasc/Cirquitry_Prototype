@@ -3,6 +3,7 @@
 
 #include "AbilitySystem/MMC/Cirquitry_MMC_SparkingFlame.h"
 #include "AbilitySystem/Cirquitry_AttributeSet.h"
+#include "Manager/Cirquitry_GameplayManager.h"
 
 UCirquitry_MMC_SparkingFlame::UCirquitry_MMC_SparkingFlame()
 {
@@ -21,6 +22,11 @@ float UCirquitry_MMC_SparkingFlame::CalculateBaseMagnitude_Implementation(const 
 	FAggregatorEvaluateParameters EvaluationParameters;
 	EvaluationParameters.SourceTags = SourceTags;
 	EvaluationParameters.TargetTags = TargetTags;
+	
+	FSpellFunctionDataRow CurrentSpellFunctionData = Cast<ACirquitry_GameplayManager>(Spec.GetContext().GetSourceObject())->GetCurrentFunctionRow();
+
+	int minDamage = CurrentSpellFunctionData.MinDamage;
+	int maxDamage = CurrentSpellFunctionData.MaxDamage;
 	
 	float Health = 0.f;
 	GetCapturedAttributeMagnitude(HealthDef, Spec, EvaluationParameters, Health);

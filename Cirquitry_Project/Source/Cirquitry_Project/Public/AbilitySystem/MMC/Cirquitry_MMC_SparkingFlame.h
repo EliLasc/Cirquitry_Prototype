@@ -24,7 +24,4 @@ private:
 
 	//Defines an attribute I want to capture for calculation
 	FGameplayEffectAttributeCaptureDefinition HealthDef;
-
-	int minDamage = 8.f;
-	int maxDamage = 10.f;
 };

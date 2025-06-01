@@ -5,11 +5,61 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "GameplayEffectTypes.h"
+#include "UI/WidgetController/Cirquitry_OverWidgetController.h"
 #include "Cirquitry_GameplayManager.generated.h"
 
 class UAbilitySystemComponent;
 class UAttributeSet;
 class UGameplayEffect;
+
+//Creates a struct to act as a base for a structure blueprint to be made from
+USTRUCT(BlueprintType)
+struct FSpellFunctionDataRow : public FTableRowBase
+{
+	GENERATED_BODY()
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	FGameplayTag ComponentTag = FGameplayTag();
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	FGameplayTag RarityTag = FGameplayTag();
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	FGameplayTag TypeTag = FGameplayTag();
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	FGameplayTag Element = FGameplayTag();
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	FGameplayTag DebuffEffect = FGameplayTag();
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	int DebuffStacks = 0.f;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	float DebuffApplicationChance = 0.f;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	float Accuracy = 0.f;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	float CritChance = 0.f;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	float CastTime = 0.f;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	int ManaCost = 0;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	int MinDamage = 0;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	int MaxDamage = 0;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	int DamageInstances = 0;
+};
 
 /** Notify interested parties that ability spec has been modified */
 //DECLARE_MULTICAST_DELEGATE_OneParam(FAbilitySpecDirtied, const FGameplayAbilitySpec&);
@@ -93,21 +143,6 @@ class UGameplayEffect;
 //FOnActiveGameplayEffectTimeChange* OnGameplayEffectTimeChangeDelegate(FActiveGameplayEffectHandle Handle);
 //FOnActiveGameplayEffectInhibitionChanged* OnGameplayEffectInhibitionChangedDelegate(FActiveGameplayEffectHandle Handle);
 
-UENUM(/*BlueprintType*/)
-enum class EEffectApplicationPolicy
-{
-	ApplyOnOverlap,
-	ApplyOnEndOverlap,
-	DoNotApply
-};
-
-UENUM(/*BlueprintType*/)
-enum class EEffectRemovalPolicy
-{
-	RemoveOnEndOverlap,
-	DoNotRemove
-};
-
 UCLASS()
 class CIRQUITRY_PROJECT_API ACirquitry_GameplayManager : public AActor
 {
@@ -116,22 +151,23 @@ class CIRQUITRY_PROJECT_API ACirquitry_GameplayManager : public AActor
 public:	
 	ACirquitry_GameplayManager();
 	virtual void SetSpawnVariables(AActor* PC, AActor* EC);
+	FSpellFunctionDataRow GetCurrentFunctionRow() {return CurrentSpellFunctionData;}
 
 protected:
 	UPROPERTY()
 	TObjectPtr<UAbilitySystemComponent>AbilitySystemComponent;
 
 	UFUNCTION(BlueprintCallable)
-	void ApplyEffectToTarget(AActor* TargetActor, TSubclassOf<UGameplayEffect> GameplayEffectClass);
+	void ApplyEffectToTarget(AActor* TargetActor, TSubclassOf<UGameplayEffect> GameplayEffectClass, FSpellFunctionDataRow SpellFunctionDT);
 
 	UFUNCTION(BlueprintCallable)
-	void StartCasting(AActor* TargetActor);
+	void StartCasting(FGameplayTag EffectTag);
 	
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Applied Effects")
 	bool bDestroyOnEffectRemoval = false;
-	
+
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Applied Effects")
-	EEffectRemovalPolicy InfiniteEffectRemovalPolicy = EEffectRemovalPolicy::RemoveOnEndOverlap;
+	FSpellFunctionDataRow CurrentSpellFunctionData;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Character")
 	AActor* PlayerCharacter;
@@ -139,5 +175,19 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Character")
 	AActor* EnemyCharacter;
 
+	//Contains the data table of all descriptions that need to be displayed
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Widget Data")
+	TObjectPtr<UDataTable> SpellFunctionDataTable;
+
 	TMap<FActiveGameplayEffectHandle, UAbilitySystemComponent*> ActiveEffectHandles;
+
+	template<typename T>
+	T* GetDataTableRowByTag(UDataTable* DataTable, const FGameplayTag& Tag);
 };
+
+	template <typename T>
+	T* ACirquitry_GameplayManager::GetDataTableRowByTag(UDataTable* DataTable, const FGameplayTag& Tag)
+	{
+		return DataTable->FindRow<T>(Tag.GetTagName(), TEXT(""));;
+	}
+
