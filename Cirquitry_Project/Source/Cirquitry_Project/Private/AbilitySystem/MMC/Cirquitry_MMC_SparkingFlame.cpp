@@ -22,7 +22,8 @@ float UCirquitry_MMC_SparkingFlame::CalculateBaseMagnitude_Implementation(const 
 	FAggregatorEvaluateParameters EvaluationParameters;
 	EvaluationParameters.SourceTags = SourceTags;
 	EvaluationParameters.TargetTags = TargetTags;
-	
+
+	//This gets the GameplayManager that cast the gameplay effect
 	FSpellFunctionDataRow CurrentSpellFunctionData = Cast<ACirquitry_GameplayManager>(Spec.GetContext().GetSourceObject())->GetCurrentFunctionRow();
 
 	int minDamage = CurrentSpellFunctionData.MinDamage;
@@ -31,5 +32,6 @@ float UCirquitry_MMC_SparkingFlame::CalculateBaseMagnitude_Implementation(const 
 	float Health = 0.f;
 	GetCapturedAttributeMagnitude(HealthDef, Spec, EvaluationParameters, Health);
 	int damage = (rand() % (maxDamage - minDamage + 1)) + minDamage;
-	return Health - damage;	
+
+	return FMath::Max<float>(Health - damage, 0.f);	
 }
