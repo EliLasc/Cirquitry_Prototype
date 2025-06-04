@@ -24,6 +24,10 @@ public:
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 	virtual  UAbilitySystemComponent* GetAbilitySystemComponent() const override;
 	UAttributeSet* GetAttributeSet() const {return AttributeSet; }
+	virtual  UAbilitySystemComponent* GetEnemyAbilitySystemComponent() const;
+	UAttributeSet* GetEnemyAttributeSet() const {return AttributeSet; }
+
+	void SetEnemyGAS(UAbilitySystemComponent* EASC, UAttributeSet* EAS);
 
 	FORCEINLINE int32 GetRound() const { return Round; }
 	
@@ -33,6 +37,12 @@ protected:
 
 	UPROPERTY()
 	TObjectPtr<UAttributeSet> AttributeSet;
+
+	UPROPERTY()
+	TObjectPtr<UAbilitySystemComponent> EnemyAbilitySystemComponent;
+
+	UPROPERTY()
+	TObjectPtr<UAttributeSet> EnemyAttributeSet;
 
 private:
 

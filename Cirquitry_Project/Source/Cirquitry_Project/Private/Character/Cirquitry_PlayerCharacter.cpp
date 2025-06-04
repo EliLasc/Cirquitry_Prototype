@@ -39,6 +39,8 @@ void ACirquitry_PlayerCharacter::InitAbilityActorInfo()
 	ACirquitry_EnemyCharacter* EnemyCharacter = GetWorld()->SpawnActor<ACirquitry_EnemyCharacter>(EnemyCharacterClass, FVector(0,0,0), FRotator(0,0,0));
 	TObjectPtr<UAttributeSet> EnemyAttributeSet = EnemyCharacter->GetAttributeSet();
 	TObjectPtr<UAbilitySystemComponent> EnemyAbilitySystemComponent = EnemyCharacter->GetAbilitySystemComponent();
+
+	Cirquitry_PlayerState->SetEnemyGAS(EnemyAbilitySystemComponent, EnemyAttributeSet);
 	
 	AbilitySystemComponent = Cirquitry_PlayerState->GetAbilitySystemComponent();
 	AttributeSet = Cirquitry_PlayerState->GetAttributeSet();

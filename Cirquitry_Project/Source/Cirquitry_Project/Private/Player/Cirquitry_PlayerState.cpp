@@ -29,6 +29,17 @@ UAbilitySystemComponent* ACirquitry_PlayerState::GetAbilitySystemComponent() con
 	return AbilitySystemComponent;
 }
 
+UAbilitySystemComponent* ACirquitry_PlayerState::GetEnemyAbilitySystemComponent() const
+{
+	return EnemyAbilitySystemComponent;
+}
+
+void ACirquitry_PlayerState::SetEnemyGAS(UAbilitySystemComponent* EASC, UAttributeSet* EAS)
+{
+	EnemyAbilitySystemComponent = EASC;
+	EnemyAttributeSet = EAS;
+}
+
 void ACirquitry_PlayerState::OnRep_Round(int32 OldRound)
 {
 	
