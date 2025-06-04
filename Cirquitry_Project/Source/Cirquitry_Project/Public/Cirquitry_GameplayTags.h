@@ -1,0 +1,53 @@
+// Copyright Cirquitry
+
+#pragma once
+
+#include "CoreMinimal.h"
+#include "GameplayTagContainer.h"
+
+/**
+ * AuraGameplayTags
+ *
+ * Singleton containing native Gameplay Tags
+ */
+
+struct FCirquitryGameplayTags
+{
+public:
+	static const FCirquitryGameplayTags& Get() { return GameplayTags;}
+	static void InitializeNativeGameplayTags();
+
+//TODO: Check is these need to all be float variables
+	
+	/**
+	 *PreCombat Attributes
+	 */
+	
+	FGameplayTag Attributes_PreCombat_Character;
+	FGameplayTag Attributes_PreCombat_SpellCircleCount;
+	FGameplayTag Attributes_PreCombat_Wealth;
+	FGameplayTag Attributes_PreCombat_Luck;
+	FGameplayTag Attributes_PreCombat_UnequippedItems;
+	FGameplayTag Attributes_PreCombat_EquippedItems;
+
+	/**
+	 *Combat Attributes
+	 */
+
+	FGameplayTag Attributes_Combat_MaxHealth;
+	FGameplayTag Attributes_Combat_Health;
+	FGameplayTag Attributes_Combat_BaseCircleMana;
+	FGameplayTag Attributes_Combat_BaseManaShield;
+	FGameplayTag Attributes_Combat_ManaShield;
+	FGameplayTag Attributes_Combat_Debuffs;
+	FGameplayTag Attributes_Combat_Buffs;
+	FGameplayTag Attributes_Combat_DamageResistance;
+	FGameplayTag Attributes_Combat_CastSpeed;
+	FGameplayTag Attributes_Combat_CritChance;
+	FGameplayTag Attributes_Combat_Accuracy;
+	
+protected:
+
+private:
+	static FCirquitryGameplayTags GameplayTags;
+};

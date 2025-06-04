@@ -3,13 +3,15 @@
 
 #include "AbilitySystem/Cirquitry_AbilitySystemComponent.h"
 
+#include "Cirquitry_GameplayTags.h"
+
 void UCirquitry_AbilitySystemComponent::AbilityActorInfoSet()
 {
 	OnGameplayEffectAppliedDelegateToSelf.AddUObject(this, &UCirquitry_AbilitySystemComponent::EffectApplied);
 }
 
 void UCirquitry_AbilitySystemComponent::EffectApplied(UAbilitySystemComponent* AbilitySystemComponent,
-                                                      const FGameplayEffectSpec& EffectSpec, FActiveGameplayEffectHandle ActiveEffectHandle)
+	const FGameplayEffectSpec& EffectSpec, FActiveGameplayEffectHandle ActiveEffectHandle)
 {
 	FGameplayTagContainer TagContainer;
 	EffectSpec.GetAllAssetTags(TagContainer);

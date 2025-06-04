@@ -12,7 +12,7 @@ class UAbilitySystemComponent;
 class UAttributeSet;
 class UGameplayEffect;
 
-//Creates a struct to act as a base for a structure blueprint to be made from
+//Creates a struct to represent spell component functions
 USTRUCT(BlueprintType)
 struct FSpellFunctionDataRow : public FTableRowBase
 {
@@ -30,6 +30,15 @@ struct FSpellFunctionDataRow : public FTableRowBase
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	FGameplayTag Element = FGameplayTag();
 
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	FGameplayTag BuffEffect = FGameplayTag();
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	int BuffStacks = 0.f;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	float BuffApplicationChance = 0.f;
+	
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	FGameplayTag DebuffEffect = FGameplayTag();
 
