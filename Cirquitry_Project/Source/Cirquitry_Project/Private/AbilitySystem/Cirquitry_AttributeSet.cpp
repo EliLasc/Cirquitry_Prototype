@@ -13,10 +13,22 @@
 UCirquitry_AttributeSet::UCirquitry_AttributeSet()
 {
 	const FCirquitryGameplayTags& GameplayTags = FCirquitryGameplayTags::Get();
-	
+
+	/* CombatAttributes */
 	TagsToAttributes.Add(GameplayTags.Attributes_Combat_MaxHealth, GetMaxHealthAttribute);
 	TagsToAttributes.Add(GameplayTags.Attributes_Combat_Health, GetHealthAttribute);
-	
+	TagsToAttributes.Add(GameplayTags.Attributes_Combat_BaseCircleMana, GetBaseCircleManaAttribute);
+	TagsToAttributes.Add(GameplayTags.Attributes_Combat_BaseManaShield, GetBaseManaShieldAttribute);
+	TagsToAttributes.Add(GameplayTags.Attributes_Combat_ManaShield, GetManaShieldAttribute);
+	TagsToAttributes.Add(GameplayTags.Attributes_Combat_DamageResistance, GetDamageResistanceAttribute);
+	TagsToAttributes.Add(GameplayTags.Attributes_Combat_CastSpeed, GetCastSpeedAttribute);
+	TagsToAttributes.Add(GameplayTags.Attributes_Combat_CritChance, GetCritChanceAttribute);
+	TagsToAttributes.Add(GameplayTags.Attributes_Combat_Accuracy, GetAccuracyAttribute);
+
+	/*PreCombat Attributes*/
+	TagsToAttributes.Add(GameplayTags.Attributes_PreCombat_SpellCircleCount, GetSpellCircleCountAttribute);
+	TagsToAttributes.Add(GameplayTags.Attributes_PreCombat_Wealth, GetWealthAttribute);
+	TagsToAttributes.Add(GameplayTags.Attributes_PreCombat_Luck, GetLuckAttribute);
 }
 
 void UCirquitry_AttributeSet::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
@@ -27,14 +39,23 @@ void UCirquitry_AttributeSet::GetLifetimeReplicatedProps(TArray<FLifetimePropert
 	 * Combat Attributes
 	 */
 
-	DOREPLIFETIME_CONDITION_NOTIFY(UCirquitry_AttributeSet, Health, COND_None, REPNOTIFY_Always)
 	DOREPLIFETIME_CONDITION_NOTIFY(UCirquitry_AttributeSet, MaxHealth, COND_None, REPNOTIFY_Always)
+	DOREPLIFETIME_CONDITION_NOTIFY(UCirquitry_AttributeSet, Health, COND_None, REPNOTIFY_Always)
+	DOREPLIFETIME_CONDITION_NOTIFY(UCirquitry_AttributeSet, BaseCircleMana, COND_None, REPNOTIFY_Always)
+	DOREPLIFETIME_CONDITION_NOTIFY(UCirquitry_AttributeSet, BaseManaShield, COND_None, REPNOTIFY_Always)
+	DOREPLIFETIME_CONDITION_NOTIFY(UCirquitry_AttributeSet, ManaShield, COND_None, REPNOTIFY_Always)
+	DOREPLIFETIME_CONDITION_NOTIFY(UCirquitry_AttributeSet, DamageResistance, COND_None, REPNOTIFY_Always)
 	DOREPLIFETIME_CONDITION_NOTIFY(UCirquitry_AttributeSet, CastSpeed, COND_None, REPNOTIFY_Always)
+	DOREPLIFETIME_CONDITION_NOTIFY(UCirquitry_AttributeSet, CritChance, COND_None, REPNOTIFY_Always)
+	DOREPLIFETIME_CONDITION_NOTIFY(UCirquitry_AttributeSet, Accuracy, COND_None, REPNOTIFY_Always)
 
 	/*
 	 * PreCombat Attributes
 	 */
-	
+
+	DOREPLIFETIME_CONDITION_NOTIFY(UCirquitry_AttributeSet, SpellCircleCount, COND_None, REPNOTIFY_Always)
+	DOREPLIFETIME_CONDITION_NOTIFY(UCirquitry_AttributeSet, Wealth, COND_None, REPNOTIFY_Always)
+	DOREPLIFETIME_CONDITION_NOTIFY(UCirquitry_AttributeSet, Luck, COND_None, REPNOTIFY_Always)
 }
 
 void UCirquitry_AttributeSet::PreAttributeChange(const FGameplayAttribute& Attribute, float& NewValue)
@@ -48,6 +69,9 @@ void UCirquitry_AttributeSet::PreAttributeChange(const FGameplayAttribute& Attri
 	//Any attributes that are clamped need the max value set first in the gameplay effect
 	if(Attribute == GetHealthAttribute())
 	{NewValue = FMath::Clamp(NewValue, 0.f, GetMaxHealth());}
+
+	if(Attribute == GetManaShieldAttribute())
+	{NewValue = FMath::Clamp(NewValue, 0.f, 10000);}
 
 	/*
 	 * PreCombat Attributes
@@ -100,6 +124,9 @@ void UCirquitry_AttributeSet::PostGameplayEffectExecute(const FGameplayEffectMod
 	if(Data.EvaluatedData.Attribute == GetHealthAttribute())
 	{SetHealth(FMath::Clamp(GetHealth(), 0.f, GetMaxHealth()));}
 
+	if(Data.EvaluatedData.Attribute == GetManaShieldAttribute())
+	{SetHealth(FMath::Clamp(GetManaShield(), 0.f, 10000));}
+
 	/*
 	 * PreCombat Attributes
 	 */
@@ -109,16 +136,43 @@ void UCirquitry_AttributeSet::PostGameplayEffectExecute(const FGameplayEffectMod
  * Combat Attributes
  */
 
+void UCirquitry_AttributeSet::OnRep_MaxHealth(const FGameplayAttributeData OldMaxHealth) const
+{GAMEPLAYATTRIBUTE_REPNOTIFY(UCirquitry_AttributeSet, MaxHealth, OldMaxHealth);}
+
 void UCirquitry_AttributeSet::OnRep_Health(const FGameplayAttributeData OldHealth) const
 {GAMEPLAYATTRIBUTE_REPNOTIFY(UCirquitry_AttributeSet, Health, OldHealth);}
 
-void UCirquitry_AttributeSet::OnRep_MaxHealth(const FGameplayAttributeData OldMaxHealth) const
-{GAMEPLAYATTRIBUTE_REPNOTIFY(UCirquitry_AttributeSet, MaxHealth, OldMaxHealth);}
+void UCirquitry_AttributeSet::OnRep_BaseCircleMana(const FGameplayAttributeData OldBaseCircleMana) const
+{GAMEPLAYATTRIBUTE_REPNOTIFY(UCirquitry_AttributeSet, BaseCircleMana, OldBaseCircleMana);}
+
+void UCirquitry_AttributeSet::OnRep_BaseManaShield(const FGameplayAttributeData OldBaseManaShield) const
+{GAMEPLAYATTRIBUTE_REPNOTIFY(UCirquitry_AttributeSet, BaseManaShield, OldBaseManaShield);}
+
+void UCirquitry_AttributeSet::OnRep_ManaShield(const FGameplayAttributeData OldManaShield) const
+{GAMEPLAYATTRIBUTE_REPNOTIFY(UCirquitry_AttributeSet, ManaShield, OldManaShield);}
+
+void UCirquitry_AttributeSet::OnRep_DamageResistance(const FGameplayAttributeData OldDamageResistance) const
+{GAMEPLAYATTRIBUTE_REPNOTIFY(UCirquitry_AttributeSet, DamageResistance, OldDamageResistance);}
 
 void UCirquitry_AttributeSet::OnRep_CastSpeed(const FGameplayAttributeData OldCastSpeed) const
 {GAMEPLAYATTRIBUTE_REPNOTIFY(UCirquitry_AttributeSet, CastSpeed, OldCastSpeed);}
 
+void UCirquitry_AttributeSet::OnRep_CritChance(const FGameplayAttributeData OldCritChance) const
+{GAMEPLAYATTRIBUTE_REPNOTIFY(UCirquitry_AttributeSet, CritChance, OldCritChance);}
+
+void UCirquitry_AttributeSet::OnRep_Accuracy(const FGameplayAttributeData OldAccuracy) const
+{GAMEPLAYATTRIBUTE_REPNOTIFY(UCirquitry_AttributeSet, Accuracy, OldAccuracy);}
+
 /*
  * PreCombat Attributes
  */
+
+void UCirquitry_AttributeSet::OnRep_SpellCircleCount(const FGameplayAttributeData OldSpellCircleCount) const
+{GAMEPLAYATTRIBUTE_REPNOTIFY(UCirquitry_AttributeSet, SpellCircleCount, OldSpellCircleCount);}
+
+void UCirquitry_AttributeSet::OnRep_Wealth(const FGameplayAttributeData OldWealth) const
+{GAMEPLAYATTRIBUTE_REPNOTIFY(UCirquitry_AttributeSet, Wealth, OldWealth);}
+
+void UCirquitry_AttributeSet::OnRep_Luck(const FGameplayAttributeData OldLuck) const
+{GAMEPLAYATTRIBUTE_REPNOTIFY(UCirquitry_AttributeSet, Luck, OldLuck);}
 

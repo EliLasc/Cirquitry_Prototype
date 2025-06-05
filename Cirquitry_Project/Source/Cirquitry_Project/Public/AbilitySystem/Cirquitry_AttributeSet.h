@@ -70,6 +70,13 @@ class CIRQUITRY_PROJECT_API UCirquitry_AttributeSet : public UAttributeSet
 	/*
 	 *Combat Variables
 	 */
+
+	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_MaxHealth, Category = "Combat Variables")
+	FGameplayAttributeData MaxHealth;
+	ATTRIBUTE_ACCESSORS(UCirquitry_AttributeSet, MaxHealth);
+
+	UFUNCTION()
+	void OnRep_MaxHealth(const FGameplayAttributeData OldMaxHealth) const;
 	
 	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_Health, Category = "Combat Variables")
 	FGameplayAttributeData Health;
@@ -78,25 +85,79 @@ class CIRQUITRY_PROJECT_API UCirquitry_AttributeSet : public UAttributeSet
 	UFUNCTION()
 	void OnRep_Health(const FGameplayAttributeData OldHealth) const;
 
-	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_MaxHealth, Category = "Combat Variables")
-	FGameplayAttributeData MaxHealth;
-	ATTRIBUTE_ACCESSORS(UCirquitry_AttributeSet, MaxHealth);
+	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_BaseCircleMana, Category = "Combat Variables")
+	FGameplayAttributeData BaseCircleMana;
+	ATTRIBUTE_ACCESSORS(UCirquitry_AttributeSet, BaseCircleMana);
 
 	UFUNCTION()
-	void OnRep_MaxHealth(const FGameplayAttributeData OldMaxHealth) const;
+	void OnRep_BaseCircleMana(const FGameplayAttributeData OldBaseCircleMana) const;
 
+	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_BaseManaShield, Category = "Combat Variables")
+	FGameplayAttributeData BaseManaShield;
+	ATTRIBUTE_ACCESSORS(UCirquitry_AttributeSet, BaseManaShield);
+
+	UFUNCTION()
+	void OnRep_BaseManaShield(const FGameplayAttributeData OldBaseManaShield) const;
+
+	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_ManaShield, Category = "Combat Variables")
+	FGameplayAttributeData ManaShield;
+	ATTRIBUTE_ACCESSORS(UCirquitry_AttributeSet, ManaShield);
+
+	UFUNCTION()
+	void OnRep_ManaShield(const FGameplayAttributeData OldManaShield) const;
+
+	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_DamageResistance, Category = "Combat Variables")
+	FGameplayAttributeData DamageResistance;
+	ATTRIBUTE_ACCESSORS(UCirquitry_AttributeSet, DamageResistance);
+
+	UFUNCTION()
+	void OnRep_DamageResistance(const FGameplayAttributeData OldDamageResistance) const;
+	
 	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_CastSpeed, Category = "Combat Variables")
 	FGameplayAttributeData CastSpeed;
 	ATTRIBUTE_ACCESSORS(UCirquitry_AttributeSet, CastSpeed);
 
 	UFUNCTION()
 	void OnRep_CastSpeed(const FGameplayAttributeData OldCastSpeed) const;
+
+	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_CritChance, Category = "Combat Variables")
+	FGameplayAttributeData CritChance;
+	ATTRIBUTE_ACCESSORS(UCirquitry_AttributeSet, CritChance);
+
+	UFUNCTION()
+	void OnRep_CritChance(const FGameplayAttributeData OldCritChance) const;
+
+	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_Accuracy, Category = "Combat Variables")
+	FGameplayAttributeData Accuracy;
+	ATTRIBUTE_ACCESSORS(UCirquitry_AttributeSet, Accuracy);
+
+	UFUNCTION()
+	void OnRep_Accuracy(const FGameplayAttributeData OldAccuracy) const;
 	
 	/*
 	 *PreCombat Variables
 	 */
 
+	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_SpellCircleCount, Category = "PreCombat Variables")
+	FGameplayAttributeData SpellCircleCount;
+	ATTRIBUTE_ACCESSORS(UCirquitry_AttributeSet, SpellCircleCount);
 
+	UFUNCTION()
+	void OnRep_SpellCircleCount(const FGameplayAttributeData OldSpellCircleCount) const;
+
+	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_Wealth, Category = "PreCombat Variables")
+	FGameplayAttributeData Wealth;
+	ATTRIBUTE_ACCESSORS(UCirquitry_AttributeSet, Wealth);
+
+	UFUNCTION()
+	void OnRep_Wealth(const FGameplayAttributeData OldWealth) const;
+
+	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_Luck, Category = "PreCombat Variables")
+	FGameplayAttributeData Luck;
+	ATTRIBUTE_ACCESSORS(UCirquitry_AttributeSet, Luck);
+
+	UFUNCTION()
+	void OnRep_Luck(const FGameplayAttributeData OldLuck) const;
 
 
 

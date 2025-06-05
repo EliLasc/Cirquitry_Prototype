@@ -8,7 +8,23 @@
 
 void UCirquitry_AttrMenuController::BindCallBacksToDependencies()
 {
-	
+	UCirquitry_AttributeSet* PAS = CastChecked<UCirquitry_AttributeSet>(PlayerAttributeSet);
+	check(PlayerAttributeInfo);
+	for(auto& Pair : PAS->TagsToAttributes)
+	{
+		PlayerAbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(Pair.Value()).AddLambda(
+	[this, Pair](const FOnAttributeChangeData& Data)
+		{BroadcastPlayerAttributeInfo(Pair.Key, Pair.Value());});
+	}
+
+	UCirquitry_AttributeSet* EAS = CastChecked<UCirquitry_AttributeSet>(EnemyAttributeSet);
+	check(EnemyAttributeInfo);
+	for(auto& Pair : EAS->TagsToAttributes)
+	{
+		PlayerAbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(Pair.Value()).AddLambda(
+	[this, Pair](const FOnAttributeChangeData& Data)
+		{BroadcastEnemyAttributeInfo(Pair.Key, Pair.Value());});
+	}
 }
 
 void UCirquitry_AttrMenuController::BroadcastInitialValues()
@@ -17,20 +33,24 @@ void UCirquitry_AttrMenuController::BroadcastInitialValues()
 	UCirquitry_AttributeSet* EAS = CastChecked<UCirquitry_AttributeSet>(EnemyAttributeSet);
 
 	check(PlayerAttributeInfo);
-
 	for(auto& Pair : PAS->TagsToAttributes)
-	{
-		FCirquitryAttributeInfo PlayerInfo = PlayerAttributeInfo->FindAttributeInfoForTag(Pair.Key);
-		PlayerInfo.AttributeValue = Pair.Value().GetNumericValue(PAS);
-		AttributeInfoDelegate.Broadcast(PlayerInfo);
-	}
+	{BroadcastPlayerAttributeInfo(Pair.Key, Pair.Value());}
 
 	check(EnemyAttributeInfo);
-
 	for(auto& Pair : EAS->TagsToAttributes)
-	{
-		FCirquitryAttributeInfo EnemyInfo = EnemyAttributeInfo->FindAttributeInfoForTag(Pair.Key);
-		EnemyInfo.AttributeValue = Pair.Value().GetNumericValue(EAS);
-		AttributeInfoDelegate.Broadcast(EnemyInfo);
-	}
+	{BroadcastEnemyAttributeInfo(Pair.Key, Pair.Value());}
+}
+
+void UCirquitry_AttrMenuController::BroadcastPlayerAttributeInfo(const FGameplayTag& AttributeTag, const FGameplayAttribute& Attribute) const
+{
+	FCirquitryAttributeInfo PlayerInfo = PlayerAttributeInfo->FindAttributeInfoForTag(AttributeTag);
+	PlayerInfo.AttributeValue = Attribute.GetNumericValue(PlayerAttributeSet);
+	AttributeInfoDelegate.Broadcast(PlayerInfo);
+}
+
+void UCirquitry_AttrMenuController::BroadcastEnemyAttributeInfo(const FGameplayTag& AttributeTag, const FGameplayAttribute& Attribute) const
+{
+	FCirquitryAttributeInfo EnemyInfo = EnemyAttributeInfo->FindAttributeInfoForTag(AttributeTag);
+	EnemyInfo.AttributeValue = Attribute.GetNumericValue(EnemyAttributeSet);
+	AttributeInfoDelegate.Broadcast(EnemyInfo);
 }

@@ -32,5 +32,10 @@ protected:
 
 	UPROPERTY(EditDefaultsOnly)
 	TObjectPtr<UCirquitry_AttributeInfo> EnemyAttributeInfo;
+
+private:
+	void BroadcastPlayerAttributeInfo(const FGameplayTag& AttributeTag, const FGameplayAttribute& Attribute) const;
+	void BroadcastEnemyAttributeInfo(const FGameplayTag& AttributeTag, const FGameplayAttribute& Attribute) const;
+
 };
 

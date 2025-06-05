@@ -21,6 +21,9 @@ struct FCirquitryAttributeInfo
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
 	FText AttributeDescription = FText();
 
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
+	bool IsPercentage = false;
+
 	//This determines the type of variable that the attributes on the attribute set will be (float)
 	UPROPERTY(BlueprintReadOnly)
 	float AttributeValue = 0.f;
