@@ -13,24 +13,15 @@ void FCirquitryGameplayTags::InitializeNativeGameplayTags()
 	 *PreCombat Attributes
 	 */
 	
-	GameplayTags.Attributes_PreCombat_Character = UGameplayTagsManager::Get().AddNativeGameplayTag(
-		FName("Attributes.PreCombat.Character"), FString("The character chosen by the player"));
-
-	GameplayTags.Attributes_PreCombat_Character = UGameplayTagsManager::Get().AddNativeGameplayTag(
+	GameplayTags.Attributes_PreCombat_SpellCircleCount = UGameplayTagsManager::Get().AddNativeGameplayTag(
 		FName("Attributes.PreCombat.SpellCircleCount"), FString("The number of spell circles available to the player"));
 
-	GameplayTags.Attributes_PreCombat_Character = UGameplayTagsManager::Get().AddNativeGameplayTag(
+	GameplayTags.Attributes_PreCombat_Wealth = UGameplayTagsManager::Get().AddNativeGameplayTag(
 		FName("Attributes.PreCombat.Wealth"), FString("The player's current wealth"));
 
-	GameplayTags.Attributes_PreCombat_Character = UGameplayTagsManager::Get().AddNativeGameplayTag(
+	GameplayTags.Attributes_PreCombat_Luck = UGameplayTagsManager::Get().AddNativeGameplayTag(
 		FName("Attributes.PreCombat.Luck"), FString("The player's luck with rarity generation"));
-
-	GameplayTags.Attributes_PreCombat_Character = UGameplayTagsManager::Get().AddNativeGameplayTag(
-		FName("Attributes.PreCombat.UnequippedItems"), FString("The items player's own but don't have equipped"));
-
-	GameplayTags.Attributes_PreCombat_Character = UGameplayTagsManager::Get().AddNativeGameplayTag(
-		FName("Attributes.PreCombat.EquippedItems"), FString("The items player's own and have equipped"));
-
+	
 	/**
 	 *Combat Attributes
 	 */
@@ -49,12 +40,6 @@ void FCirquitryGameplayTags::InitializeNativeGameplayTags()
 
 	GameplayTags.Attributes_Combat_ManaShield = UGameplayTagsManager::Get().AddNativeGameplayTag(
 		FName("Attributes.Combat.ManaShield"), FString("The player's current combat mana shield"));
-
-	GameplayTags.Attributes_Combat_Debuffs = UGameplayTagsManager::Get().AddNativeGameplayTag(
-		FName("Attributes.Combat.Debuffs"), FString("The debuffs currently ailing the player"));
-
-	GameplayTags.Attributes_Combat_Buffs = UGameplayTagsManager::Get().AddNativeGameplayTag(
-		FName("Attributes.Combat.Buffs"), FString("The buffs currently effecting the player"));
 
 	GameplayTags.Attributes_Combat_DamageResistance = UGameplayTagsManager::Get().AddNativeGameplayTag(
 		FName("Attributes.Combat.DamageResistance"), FString("The player's resistance to non-debuff damage"));

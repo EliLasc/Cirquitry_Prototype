@@ -7,6 +7,7 @@
 #include "Cirquitry_AbilitySystemLibrary.generated.h"
 
 
+class UCirquitry_AttrMenuController;
 class UCirquitry_OverWidgetController;
 /**
  * 
@@ -19,4 +20,7 @@ public:
 
 	UFUNCTION(BlueprintPure, Category = "CirquitryAbilitySystemLibrary|WidgetController")
 	static UCirquitry_OverWidgetController* GetOverlayWidgetController(const UObject* WorldContextObject);
+
+	UFUNCTION(BlueprintPure, Category = "CirquitryAbilitySystemLibrary|WidgetController")
+	static UCirquitry_AttrMenuController* GetAttributeMenuWidgetController(const UObject* WorldContextObject);
 };

@@ -3,6 +3,7 @@
 
 #include "UI/HUD/Cirquitry_HUD.h"
 #include "UI/Widget/Cirquitry_UserWidget.h"
+#include "UI/WidgetController/Cirquitry_AttrMenuController.h"
 #include "UI/WidgetController/Cirquitry_OverWidgetController.h"
 
 UCirquitry_OverWidgetController* ACirquitry_HUD::GetOverlayWidgetController(const FWidgetControllerParams& WCParams)
@@ -12,9 +13,19 @@ UCirquitry_OverWidgetController* ACirquitry_HUD::GetOverlayWidgetController(cons
 		OverlayWidgetController = NewObject<UCirquitry_OverWidgetController>(this, OverlayWidgetControllerClass);
 		OverlayWidgetController->SetWidgetControllerParams(WCParams);
 		OverlayWidgetController->BindCallBacksToDependencies();
-		return OverlayWidgetController;
 	}
 	return OverlayWidgetController;
+}
+
+UCirquitry_AttrMenuController* ACirquitry_HUD::GetAttributeMenuWidgetController(const FWidgetControllerParams& WCParams)
+{
+	if(AttributeMenuWidgetController == nullptr)
+	{
+		AttributeMenuWidgetController = NewObject<UCirquitry_AttrMenuController>(this, AttributeMenuWidgetControllerClass);
+		AttributeMenuWidgetController->SetWidgetControllerParams(WCParams);
+		AttributeMenuWidgetController->BindCallBacksToDependencies();
+	}
+	return AttributeMenuWidgetController;
 }
 
 void ACirquitry_HUD::InitOverlay(APlayerController* PC, APlayerState* PS, UAbilitySystemComponent* PASC, UAbilitySystemComponent* EASC, UAttributeSet* PAS, UAttributeSet* EAS)

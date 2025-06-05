@@ -22,13 +22,10 @@ public:
 	/**
 	 *PreCombat Attributes
 	 */
-	
-	FGameplayTag Attributes_PreCombat_Character;
+
 	FGameplayTag Attributes_PreCombat_SpellCircleCount;
 	FGameplayTag Attributes_PreCombat_Wealth;
 	FGameplayTag Attributes_PreCombat_Luck;
-	FGameplayTag Attributes_PreCombat_UnequippedItems;
-	FGameplayTag Attributes_PreCombat_EquippedItems;
 
 	/**
 	 *Combat Attributes
@@ -39,8 +36,6 @@ public:
 	FGameplayTag Attributes_Combat_BaseCircleMana;
 	FGameplayTag Attributes_Combat_BaseManaShield;
 	FGameplayTag Attributes_Combat_ManaShield;
-	FGameplayTag Attributes_Combat_Debuffs;
-	FGameplayTag Attributes_Combat_Buffs;
 	FGameplayTag Attributes_Combat_DamageResistance;
 	FGameplayTag Attributes_Combat_CastSpeed;
 	FGameplayTag Attributes_Combat_CritChance;

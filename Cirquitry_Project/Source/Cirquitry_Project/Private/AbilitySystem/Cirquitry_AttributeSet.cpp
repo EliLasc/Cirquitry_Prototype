@@ -7,12 +7,16 @@
 #include "GameFramework/Character.h"
 #include "GameplayEffectExtension.h"
 #include "Net/UnrealNetwork.h"
-//#include "Cirquitry_GameplayTags.h"
+#include "Cirquitry_GameplayTags.h"
 
 
 UCirquitry_AttributeSet::UCirquitry_AttributeSet()
 {
-	//const FCirquitry_GameplayTags& GameplayTags = FCirquitry_GameplayTags::Get();
+	const FCirquitryGameplayTags& GameplayTags = FCirquitryGameplayTags::Get();
+	
+	TagsToAttributes.Add(GameplayTags.Attributes_Combat_MaxHealth, GetMaxHealthAttribute);
+	TagsToAttributes.Add(GameplayTags.Attributes_Combat_Health, GetHealthAttribute);
+	
 }
 
 void UCirquitry_AttributeSet::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
