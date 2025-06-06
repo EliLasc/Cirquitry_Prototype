@@ -4,6 +4,7 @@
 #include "AbilitySystem/Cirquitry_AbilitySystemComponent.h"
 
 #include "Cirquitry_GameplayTags.h"
+#include "AbilitySystem/Abilities/Cirquitry_GameplayAbility.h"
 
 void UCirquitry_AbilitySystemComponent::AbilityActorInfoSet()
 {
@@ -13,11 +14,17 @@ void UCirquitry_AbilitySystemComponent::AbilityActorInfoSet()
 void UCirquitry_AbilitySystemComponent::AddCharacterAbilities(
 	const TArray<TSubclassOf<UGameplayAbility>>& StartupAbilities)
 {
-	for (TSubclassOf<UGameplayAbility> AbilityClass : StartupAbilities)
+	//This will read the spell components the player has equipped and give them to the character as abilities
+	for (const TSubclassOf<UGameplayAbility> AbilityClass : StartupAbilities)
 	{
 		FGameplayAbilitySpec AbilitySpec = FGameplayAbilitySpec(AbilityClass, 1);
-		//GiveAbility(AbilitySpec);
-		GiveAbilityAndActivateOnce(AbilitySpec);
+		if(const UCirquitry_GameplayAbility* CirquitryAbility = Cast<UCirquitry_GameplayAbility>(AbilitySpec.Ability))
+		{
+			//This would be changed out later since abilities won't activate using player inputs
+			AbilitySpec.DynamicAbilityTags.AddTag(CirquitryAbility->StartupInputTag);
+			
+			GiveAbility(AbilitySpec);
+		}
 	}
 }
 
