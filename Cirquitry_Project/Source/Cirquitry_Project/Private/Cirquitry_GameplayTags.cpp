@@ -52,4 +52,30 @@ void FCirquitryGameplayTags::InitializeNativeGameplayTags()
 
 	GameplayTags.Attributes_Combat_Accuracy = UGameplayTagsManager::Get().AddNativeGameplayTag(
 		FName("Attributes.Combat.Accuracy"), FString("The player's chance to hit any cast spell components"));
+
+	/*
+	 *Enhanced Inputs
+	 */
+	
+	GameplayTags.InputTag_ESC = UGameplayTagsManager::Get().AddNativeGameplayTag(
+		FName("InputTag.ESC"), FString("Input Tag for ESC Key"));
+
+	GameplayTags.InputTag_LMB = UGameplayTagsManager::Get().AddNativeGameplayTag(
+		FName("InputTag.LMB"), FString("Input Tag for Left Mouse Button"));
+
+	GameplayTags.InputTag_RMB = UGameplayTagsManager::Get().AddNativeGameplayTag(
+		FName("InputTag.RMB"), FString("Input Tag for Right Mouse Button"));
+
+	GameplayTags.InputTag_1 = UGameplayTagsManager::Get().AddNativeGameplayTag(
+		FName("InputTag.1"), FString("Input Tag for 1 key"));
+
+	GameplayTags.InputTag_2 = UGameplayTagsManager::Get().AddNativeGameplayTag(
+		FName("InputTag.2"), FString("Input Tag for 2 key"));
+
+	GameplayTags.InputTag_3 = UGameplayTagsManager::Get().AddNativeGameplayTag(
+		FName("InputTag.3"), FString("Input Tag for 3 key"));
+
+	GameplayTags.InputTag_4 = UGameplayTagsManager::Get().AddNativeGameplayTag(
+		FName("InputTag.4"), FString("Input Tag for 14key"));
+
 }

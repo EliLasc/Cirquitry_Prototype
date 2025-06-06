@@ -14,6 +14,7 @@ void ACirquitry_PlayerCharacter::PossessedBy(AController* NewController)
 {
 	Super::PossessedBy(NewController);
 	InitAbilityActorInfo();
+	AddCharacterAbilities();
 }
 
 void ACirquitry_PlayerCharacter::OnRep_PlayerState()

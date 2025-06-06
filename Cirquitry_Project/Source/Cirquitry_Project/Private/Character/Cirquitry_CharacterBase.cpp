@@ -3,6 +3,7 @@
 
 #include "Character/Cirquitry_CharacterBase.h"
 #include "AbilitySystemComponent.h"
+#include "AbilitySystem/Cirquitry_AbilitySystemComponent.h"
 
 ACirquitry_CharacterBase::ACirquitry_CharacterBase()
 {
@@ -38,6 +39,14 @@ void ACirquitry_CharacterBase::InitializeDefaultAttributes() const
 {
 	ApplyEffectToSelf(DefaultPreCombatAttributes, 1.f);
 	ApplyEffectToSelf(DefaultCombatAttributes, 1.f);
+}
+
+void ACirquitry_CharacterBase::AddCharacterAbilities()
+{
+	UCirquitry_AbilitySystemComponent* CirquitryASC = CastChecked<UCirquitry_AbilitySystemComponent>(AbilitySystemComponent);
+	if (!HasAuthority()) return;
+
+	CirquitryASC->AddCharacterAbilities(StartupAbilities);
 }
 
 
