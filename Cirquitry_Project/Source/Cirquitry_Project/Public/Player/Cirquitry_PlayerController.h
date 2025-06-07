@@ -10,6 +10,7 @@
 class UInputMappingContext;
 class UInputAction;
 class UCirquitry_InputConfig;
+class UCirquitry_AbilitySystemComponent;
 
 /**
  * 
@@ -33,15 +34,16 @@ private:
 	//This is an example of how to add a variable to assign as an Input Action
 	UPROPERTY(EditAnywhere, Category="Input")
 	TObjectPtr<UInputAction> PauseMenu;
-
-	/*
-	 *
+	
 	void AbilityInputTagPressed(FGameplayTag InputTag);
 	void AbilityInputTagReleased(FGameplayTag InputTag);
 	void AbilityInputTagHeld(FGameplayTag InputTag);
-	 *
-	 */
 	
 	UPROPERTY(EditDefaultsOnly, Category = "Input")
 	TObjectPtr<UCirquitry_InputConfig> InputConfig;
+
+	UPROPERTY()
+	TObjectPtr<UCirquitry_AbilitySystemComponent> Cirquitry_AbilitySystemComponent;
+
+	UCirquitry_AbilitySystemComponent* GetASC();
 };

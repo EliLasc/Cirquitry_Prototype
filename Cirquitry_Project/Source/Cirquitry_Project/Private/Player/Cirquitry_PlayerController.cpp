@@ -2,7 +2,9 @@
 
 
 #include "Player/Cirquitry_PlayerController.h"
+#include "AbilitySystemBlueprintLibrary.h"
 #include "EnhancedInputSubsystems.h"
+#include "AbilitySystem/Cirquitry_AbilitySystemComponent.h"
 #include "Input/Cirquitry_InputComponent.h"
 
 ACirquitry_PlayerController::ACirquitry_PlayerController()
@@ -36,23 +38,35 @@ void ACirquitry_PlayerController::SetupInputComponent()
 
 	CirquitryInputComponent->BindAction(PauseMenu, ETriggerEvent::Triggered, this, &ACirquitry_PlayerController::Pause);
 
-	//CirquitryInputComponent->BindAbilityActions(InputConfig, this, &ThisClass::AbilityInputTagPressed,
-	//	&ThisClass::AbilityInputTagReleased, &ThisClass::AbilityInputTagHeld);
+	CirquitryInputComponent->BindAbilityActions(InputConfig, this, &ThisClass::AbilityInputTagPressed,
+		&ThisClass::AbilityInputTagReleased, &ThisClass::AbilityInputTagHeld);
 }
 
-/*
- *
- *
+UCirquitry_AbilitySystemComponent* ACirquitry_PlayerController::GetASC()
+{
+	if (Cirquitry_AbilitySystemComponent == nullptr)
+	{
+		Cirquitry_AbilitySystemComponent = Cast<UCirquitry_AbilitySystemComponent>(UAbilitySystemBlueprintLibrary::GetAbilitySystemComponent(GetPawn<APawn>()));
+	}
+	return Cirquitry_AbilitySystemComponent;
+}
+
+
 void ACirquitry_PlayerController::AbilityInputTagPressed(FGameplayTag InputTag)
-{GEngine->AddOnScreenDebugMessage(1, 3.f, FColor::Red, *InputTag.ToString());}
+{
+	
+}
 
 void ACirquitry_PlayerController::AbilityInputTagReleased(FGameplayTag InputTag)
-{GEngine->AddOnScreenDebugMessage(2, 3.f, FColor::Blue, *InputTag.ToString());}
+{
+	if (GetASC() == nullptr) return;
+	GetASC()->AbilityInputTagHeld(InputTag);
+}
 
 void ACirquitry_PlayerController::AbilityInputTagHeld(FGameplayTag InputTag)
-{GEngine->AddOnScreenDebugMessage(3, 3.f, FColor::Green, *InputTag.ToString());}
- *
- *
- */
+{
+	if (GetASC() == nullptr) return;
+	GetASC()->AbilityInputTagHeld(InputTag);
+}
 
 
